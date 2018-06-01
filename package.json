@@ -1,0 +1,23 @@
+{
+  "name": "wrlubot",
+  "version": "0.0.1",
+  "description": "Chat bot for utility",
+  "main": "}",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CaothicPechan/wrlu-chatbot.git"
+  },
+  "keywords": [
+    "chatbot",
+    "dialogflow"
+  ],
+  "author": "Caothic Pechan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CaothicPechan/wrlu-chatbot/issues"
+  },
+  "homepage": "https://github.com/CaothicPechan/wrlu-chatbot#readme"
+}
