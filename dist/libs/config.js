@@ -11,8 +11,10 @@ var constants = exports.constants = {
         pageToken: '',
         verifyToken: '',
         appID: '',
-        appSecret: ''
+        appSecret: '',
+        graphMsgURL: 'https://graph.facebook.com/v2.6/me/messages'
     },
+    googleProjectId: '',
     apiAiClientAccessToken: '',
     serverURL: "https://.herokuapp.com/",
     sengridApiKey: '',

@@ -49,9 +49,5 @@ var app = (0, _express2.default)();
 (0, _settings2.default)(app, _config.constants);
 (0, _index2.default)(app);
 
-var x = new _facebookObjects.Button();
-console.log(x);
-x.type = 'hello';
-console.log(x);
 (0, _init2.default)(app);
 //# sourceMappingURL=app.js.map
