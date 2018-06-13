@@ -9,8 +9,7 @@ export default (app, constants) => {
     }
 
     app.set('port', (process.env.PORT || port));
-
-    // App Verifying
+    
     // app.use(bodyParser.json({
     //     verify: fbService.verifyRequestSignature
     // }));
