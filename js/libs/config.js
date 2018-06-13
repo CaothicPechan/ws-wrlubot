@@ -1,7 +1,7 @@
 export const constants =
 {
     env:{
-        port: 8000
+        port: 8080
     },
     fb:{
         pageToken: '',
