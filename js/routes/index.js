@@ -4,7 +4,7 @@ import { constants } from '../libs/config'
 export default (app) => {
     app.get('/', (req,res) => {
         res.json({
-            response: 'Hello index!'
+            response: 'Hello index deploy!'
         });
     });
     app.get('/webhook/', function (req, res) {
