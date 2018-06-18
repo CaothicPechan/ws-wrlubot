@@ -21,6 +21,7 @@ import { Button, Element } from '../../models/facebookObjects';
 export default class {
 
     constructor(graphMsgURL, pageToken){
+        this.constants = {};
         this.constants.graphMsgURL = graphMsgURL;
         this.constants.pageToken = pageToken;
 

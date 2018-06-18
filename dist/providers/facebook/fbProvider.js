@@ -39,6 +39,7 @@ var _class = function () {
     function _class(graphMsgURL, pageToken) {
         _classCallCheck(this, _class);
 
+        this.constants = {};
         this.constants.graphMsgURL = graphMsgURL;
         this.constants.pageToken = pageToken;
     }
