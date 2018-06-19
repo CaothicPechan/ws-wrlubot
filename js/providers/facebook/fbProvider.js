@@ -25,6 +25,7 @@ export default class {
         this.constants.graphMsgURL = graphMsgURL;
         this.constants.pageToken = pageToken;
         this.constants.appSecret = appSecret;
+        console.log(this.constants);
     }
     
     /** Handle methods
