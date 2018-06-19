@@ -39,6 +39,7 @@ var _class = function () {
     function _class(graphMsgURL, pageToken, appSecret) {
         _classCallCheck(this, _class);
 
+        console.log('Called constructor');
         this.constants = {};
         this.constants.graphMsgURL = graphMsgURL;
         this.constants.pageToken = pageToken;
