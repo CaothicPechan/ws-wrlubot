@@ -5,6 +5,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.FbProvider = undefined;
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _request = require('request');
 
 var _request2 = _interopRequireDefault(_request);
@@ -53,8 +55,6 @@ var FbProvider = exports.FbProvider = function () {
      * @param {*} messageAttachments 
      * @param {*} senderID 
      */
-
-
     FbProvider.prototype.handleMessageAttachments = function handleMessageAttachments(messageAttachments, senderID) {
         this.sendTextMessage(senderID, "Attachment received. Thank you.");
     };
@@ -670,6 +670,13 @@ var FbProvider = exports.FbProvider = function () {
             }
         });
     };
+
+    _createClass(FbProvider, [{
+        key: 'constructor',
+        value: function constructor(graphMsgURL, pageToken, appSecret) {
+            return new FbProvider(graphMsgURL, pageToken, appSecret);
+        }
+    }]);
 
     return FbProvider;
 }();

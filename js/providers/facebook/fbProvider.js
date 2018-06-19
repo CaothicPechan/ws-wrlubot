@@ -25,7 +25,10 @@ export class FbProvider{
         this.constants.graphMsgURL = graphMsgURL;
         this.constants.pageToken = pageToken;
         this.constants.appSecret = appSecret;
+    }
 
+    call constructor(graphMsgURL, pageToken, appSecret){
+        return new FbProvider(graphMsgURL,pageToken, appSecret);
     }
     
     /** Handle methods
