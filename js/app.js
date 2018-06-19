@@ -91,7 +91,7 @@ function receivedMessage(event) {
 	var timeOfMessage = event.timestamp;
 	var message = event.message;
 
-	setSessionAndUser(senderID);
+	//setSessionAndUser(senderID);
 
 	//console.log("Received message for user %d and page %d at %d with message:", senderID, recipientID, timeOfMessage);
 	//console.log(JSON.stringify(message));
@@ -140,7 +140,7 @@ function receivedPostback(event) {
 	// button for Structured Messages.
 	var payload = event.postback.payload;
 
-	setSessionAndUser(senderID);
+	//setSessionAndUser(senderID);
 
 	switch (payload) {
 		case 'FUN_NEWS':

@@ -24,7 +24,6 @@ exports.default = function (app, constants) {
 
     app.set('port', process.env.PORT || port);
 
-    console.log(fbService);
     // Verifying Facebook Request
     app.use(_bodyParser2.default.json({
         verify: fbService.verifyRequestSignature

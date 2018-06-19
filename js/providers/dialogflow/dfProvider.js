@@ -34,6 +34,9 @@ export default class {
         this.sessionClient = new dialogflow.SessionsClient();
 
         this.fbService = fbService ? fbService : null;
+        
+        this.sendTextQueryToApiAi = this.sendEventToApiAi.bind(this);
+        this.sendEventToApiAi = this.sendEventToApiAi.bind(this);
     }
 
     /** Send a text query to DialogFlow API

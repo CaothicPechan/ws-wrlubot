@@ -41,11 +41,24 @@ var _class = function () {
         this.constants.graphMsgURL = graphMsgURL;
         this.constants.pageToken = pageToken;
         this.constants.appSecret = appSecret;
+
+        this.handleMessage = this.handleMessage.bind(this);
+        this.handleMessageAttachments = this.handleMessageAttachments.bind(this);
+        this.handleEcho = this.handleEcho.bind(this);
+        this.handleCardMessages = this.handleCardMessages.bind(this);
+
+        this.receivedMessageRead = this.receivedMessageRead.bind(this);
+        this.receivedAccountLink = this.receivedAccountLink.bind(this);
+        this.receivedAuthentication = this.receivedAuthentication.bind(this);
+        this.receivedDeliveryConfirmation = this.receivedDeliveryConfirmation.bind(this);
+
+        this.callSendAPI = this.callSendAPI.bind(this);
+        this.sendButtonMessage = this.sendButtonMessage.bind(this);
+        this.sendGenericMessage = this.sendGenericMessage.bind(this);
         this.verifyRequestSignature = this.verifyRequestSignature.bind(this);
-        console.log(this.constants);
     }
 
-    /** Handle methods
+    /** Handle methods **
      * 
      */
 
@@ -184,7 +197,7 @@ var _class = function () {
         this.sendGenericMessage(sender, elements);
     };
 
-    /** **Events Section**
+    /** **Events Section **
      *
      *  @description Events functions.
      */
