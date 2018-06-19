@@ -41,6 +41,7 @@ var _class = function () {
         this.constants.graphMsgURL = graphMsgURL;
         this.constants.pageToken = pageToken;
         this.constants.appSecret = appSecret;
+        this.verifyRequestSignature = this.verifyRequestSignature.bind(this);
         console.log(this.constants);
     }
 
