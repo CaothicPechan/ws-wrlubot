@@ -9,7 +9,7 @@ var _config = require('../libs/config');
 exports.default = function (app) {
     app.get('/', function (req, res) {
         res.json({
-            response: 'Hello index!'
+            response: 'Hello index deploy!'
         });
     });
     app.get('/webhook/', function (req, res) {

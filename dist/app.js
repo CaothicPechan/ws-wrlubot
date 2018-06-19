@@ -146,6 +146,49 @@ function receivedMessage(event) {
 	}
 }
 
+/*
+ * Postback Event
+ *
+ * This event is called when a postback is tapped on a Structured Message.
+ * https://developers.facebook.com/docs/messenger-platform/webhook-reference/postback-received
+ *
+ */
+function receivedPostback(event) {
+	var senderID = event.sender.id;
+	var recipientID = event.recipient.id;
+	var timeOfPostback = event.timestamp;
+
+	// The 'payload' param is a developer-defined field which is set in a postback
+	// button for Structured Messages.
+	var payload = event.postback.payload;
+
+	setSessionAndUser(senderID);
+
+	switch (payload) {
+		case 'FUN_NEWS':
+			sendFunNewsSubscribe(senderID);
+			break;
+		case 'GET_STARTED':
+			greetUserText(senderID);
+			break;
+		case 'JOB_APPLY':
+			//get feedback with new jobs
+			dfService.sendEventToApiAi(sessionIds, handleApiAiResponse, senderID, "JOB_OPENINGS");
+			break;
+		case 'CHAT':
+			//user wants to chat
+			fbService.sendTextMessage(senderID, "I love chatting too. Do you have any other questions for me?");
+			break;
+		default:
+			//unindentified payload
+			fbService.sendTextMessage(senderID, "I'm not sure what you want. Can you be more specific?");
+			break;
+
+	}
+
+	console.log("Received postback for user %d and page %d with payload '%s' " + "at %d", senderID, recipientID, payload, timeOfPostback);
+}
+
 function handleApiAiResponse(sender, response) {
 
 	var responseText = response.result.fulfillment.speech;

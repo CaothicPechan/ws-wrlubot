@@ -10,7 +10,7 @@ export const constants =
         appSecret: '47f848974f91e853d50367d9bece06ee',
         graphMsgURL: 'https://graph.facebook.com/v2.6/me/messages'
     },
-    googleProjectId:'',
+    googleProjectId:'my-project-1496089993138',
     apiAiClientAccessToken: '',
     serverURL: "https://chatbot-lib.herokuapp.com/",
     sengridApiKey: '',
