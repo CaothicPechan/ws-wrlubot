@@ -59,7 +59,7 @@ var app = (0, _express2.default)();
 
 (0, _init2.default)(app);
 
-var fbService = new _fbProvider2.default(_config.constants.fb.graphMsgURL, _config.constants.fb.pageToken);
+var fbService = new _fbProvider2.default(_config.constants.fb.graphMsgURL, _config.constants.fb.pageToken, _config.constants.fb.appSecret);
 var dfService = new _dfProvider2.default(_config.constants.googleProjectId, fbService);
 
 /*

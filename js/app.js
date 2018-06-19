@@ -33,7 +33,7 @@ router(app);
 
 init(app);
 
-let fbService = new fbProvider(constants.fb.graphMsgURL, constants.fb.pageToken);
+let fbService = new fbProvider(constants.fb.graphMsgURL, constants.fb.pageToken, constants.fb.appSecret);
 let dfService = new dfProvider(constants.googleProjectId, fbService);
 
 

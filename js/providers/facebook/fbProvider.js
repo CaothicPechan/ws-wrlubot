@@ -20,10 +20,11 @@ import { Button, Element } from '../../models/facebookObjects';
 
 export default class {
 
-    constructor(graphMsgURL, pageToken){
+    constructor(graphMsgURL, pageToken, appSecret){
         this.constants = {};
         this.constants.graphMsgURL = graphMsgURL;
         this.constants.pageToken = pageToken;
+        this.constants.appSecret = appSecret;
 
     }
     
@@ -275,7 +276,7 @@ export default class {
             var method = elements[0];
             var signatureHash = elements[1];
 
-            var expectedHash = crypto.createHmac('sha1', config.FB_APP_SECRET)
+            var expectedHash = crypto.createHmac('sha1', this.constants.appSecret)
                 .update(buf)
                 .digest('hex');
 
@@ -362,67 +363,67 @@ export default class {
     /** Send a Gif using the Send API.
      *
      */
-    sendGifMessage(recipientId){
-        var messageData = {
-            recipient: {
-                id: recipientId
-            },
-            message: {
-                attachment: {
-                    type: "image",
-                    payload: {
-                        url: config.serverURL + "/assets/instagram_logo.gif"
-                    }
-                }
-            }
-        };
-        this.callSendAPI(messageData);
-    }
+    // sendGifMessage(recipientId){
+    //     var messageData = {
+    //         recipient: {
+    //             id: recipientId
+    //         },
+    //         message: {
+    //             attachment: {
+    //                 type: "image",
+    //                 payload: {
+    //                     url: config.serverURL + "/assets/instagram_logo.gif"
+    //                 }
+    //             }
+    //         }
+    //     };
+    //     this.callSendAPI(messageData);
+    // }
 
     /** Send audio using the Send API.
      *
      */
-    sendAudioMessage(recipientId){
-        var messageData = {
-            recipient: {
-                id: recipientId
-            },
-            message: {
-                attachment: {
-                    type: "audio",
-                    payload: {
-                        url: config.serverURL + "/assets/sample.mp3"
-                    }
-                }
-            }
-        };
+    // sendAudioMessage(recipientId){
+    //     var messageData = {
+    //         recipient: {
+    //             id: recipientId
+    //         },
+    //         message: {
+    //             attachment: {
+    //                 type: "audio",
+    //                 payload: {
+    //                     url: config.serverURL + "/assets/sample.mp3"
+    //                 }
+    //             }
+    //         }
+    //     };
 
-        this.callSendAPI(messageData);
-    }
+    //     this.callSendAPI(messageData);
+    // }
 
     /** Send a video using the Send API.
      *  @example  videoName: "/assets/allofus480.mov"
      * 
      * 
      */
-    sendVideoMessage(recipientId, videoName){
+    // sendVideoMessage(recipientId, videoName){
         
-        var messageData = {
-            recipient: {
-                id: recipientId
-            },
-            message: {
-                attachment: {
-                    type: "video",
-                    payload: {
-                        url: config.serverURL + videoName
-                    }
-                }
-            }
-        };
+    //     var messageData = {
+    //         recipient: {
+    //             id: recipientId
+    //         },
+    //         message: {
+    //             attachment: {
+    //                 type: "video",
+    //                 payload: {
+    //                     url: config.serverURL + videoName
+    //                 }
+    //             }
+    //         }
+    //     };
 
-        this.callSendAPI(messageData);
-    }
+    //     this.callSendAPI(messageData);
+    // }
 
     /** Send a video using the Send API.
      * 
@@ -430,23 +431,23 @@ export default class {
      * 
      * 
      */
-    sendFileMessage(recipientId, fileName) {
-        var messageData = {
-            recipient: {
-                id: recipientId
-            },
-            message: {
-                attachment: {
-                    type: "file",
-                    payload: {
-                        url: config.serverURL + fileName
-                    }
-                }
-            }
-        };
+    // sendFileMessage(recipientId, fileName) {
+    //     var messageData = {
+    //         recipient: {
+    //             id: recipientId
+    //         },
+    //         message: {
+    //             attachment: {
+    //                 type: "file",
+    //                 payload: {
+    //                     url: config.serverURL + fileName
+    //                 }
+    //             }
+    //         }
+    //     };
 
-        this.callSendAPI(messageData);
-    }
+    //     this.callSendAPI(messageData);
+    // }
 
     /** Send a button message using the Send API.
      *
@@ -554,28 +555,28 @@ export default class {
      * 
      * @param {*} recipientId 
      */
-    sendAccountLinking(recipientId){
-        var messageData = {
-            recipient: {
-                id: recipientId
-            },
-            message: {
-                attachment: {
-                    type: "template",
-                    payload: {
-                        template_type: "button",
-                        text: "Welcome. Link your account.",
-                        buttons: [{
-                            type: "account_link",
-                            url: config.serverURL + "/authorize"
-                        }]
-                    }
-                }
-            }
-        };
+    // sendAccountLinking(recipientId){
+    //     var messageData = {
+    //         recipient: {
+    //             id: recipientId
+    //         },
+    //         message: {
+    //             attachment: {
+    //                 type: "template",
+    //                 payload: {
+    //                     template_type: "button",
+    //                     text: "Welcome. Link your account.",
+    //                     buttons: [{
+    //                         type: "account_link",
+    //                         url: config.serverURL + "/authorize"
+    //                     }]
+    //                 }
+    //             }
+    //         }
+    //     };
 
-        callSendAPI(messageData);
-    }
+    //     callSendAPI(messageData);
+    // }
 
     /** Send Text Message
      * 

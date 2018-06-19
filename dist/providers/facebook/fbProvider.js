@@ -36,12 +36,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  */
 
 var _class = function () {
-    function _class(graphMsgURL, pageToken) {
+    function _class(graphMsgURL, pageToken, appSecret) {
         _classCallCheck(this, _class);
 
         this.constants = {};
         this.constants.graphMsgURL = graphMsgURL;
         this.constants.pageToken = pageToken;
+        this.constants.appSecret = appSecret;
     }
 
     /** Handle methods
@@ -313,7 +314,7 @@ var _class = function () {
                 var method = elements[0];
                 var signatureHash = elements[1];
 
-                var expectedHash = _crypto2.default.createHmac('sha1', config.FB_APP_SECRET).update(buf).digest('hex');
+                var expectedHash = _crypto2.default.createHmac('sha1', this.constants.appSecret).update(buf).digest('hex');
 
                 if (signatureHash != expectedHash) {
                     throw new Error("Couldn't validate the request signature.");
@@ -407,76 +408,67 @@ var _class = function () {
         /** Send a Gif using the Send API.
          *
          */
-
-    }, {
-        key: 'sendGifMessage',
-        value: function sendGifMessage(recipientId) {
-            var messageData = {
-                recipient: {
-                    id: recipientId
-                },
-                message: {
-                    attachment: {
-                        type: "image",
-                        payload: {
-                            url: config.serverURL + "/assets/instagram_logo.gif"
-                        }
-                    }
-                }
-            };
-            this.callSendAPI(messageData);
-        }
+        // sendGifMessage(recipientId){
+        //     var messageData = {
+        //         recipient: {
+        //             id: recipientId
+        //         },
+        //         message: {
+        //             attachment: {
+        //                 type: "image",
+        //                 payload: {
+        //                     url: config.serverURL + "/assets/instagram_logo.gif"
+        //                 }
+        //             }
+        //         }
+        //     };
+        //     this.callSendAPI(messageData);
+        // }
 
         /** Send audio using the Send API.
          *
          */
+        // sendAudioMessage(recipientId){
+        //     var messageData = {
+        //         recipient: {
+        //             id: recipientId
+        //         },
+        //         message: {
+        //             attachment: {
+        //                 type: "audio",
+        //                 payload: {
+        //                     url: config.serverURL + "/assets/sample.mp3"
+        //                 }
+        //             }
+        //         }
+        //     };
 
-    }, {
-        key: 'sendAudioMessage',
-        value: function sendAudioMessage(recipientId) {
-            var messageData = {
-                recipient: {
-                    id: recipientId
-                },
-                message: {
-                    attachment: {
-                        type: "audio",
-                        payload: {
-                            url: config.serverURL + "/assets/sample.mp3"
-                        }
-                    }
-                }
-            };
-
-            this.callSendAPI(messageData);
-        }
+        //     this.callSendAPI(messageData);
+        // }
 
         /** Send a video using the Send API.
          *  @example  videoName: "/assets/allofus480.mov"
          * 
          * 
          */
+        // sendVideoMessage(recipientId, videoName){
 
-    }, {
-        key: 'sendVideoMessage',
-        value: function sendVideoMessage(recipientId, videoName) {
+        //     var messageData = {
+        //         recipient: {
+        //             id: recipientId
+        //         },
+        //         message: {
+        //             attachment: {
+        //                 type: "video",
+        //                 payload: {
+        //                     url: config.serverURL + videoName
+        //                 }
+        //             }
+        //         }
+        //     };
 
-            var messageData = {
-                recipient: {
-                    id: recipientId
-                },
-                message: {
-                    attachment: {
-                        type: "video",
-                        payload: {
-                            url: config.serverURL + videoName
-                        }
-                    }
-                }
-            };
-
-            this.callSendAPI(messageData);
-        }
+        //     this.callSendAPI(messageData);
+        // }
 
         /** Send a video using the Send API.
          * 
@@ -484,26 +476,23 @@ var _class = function () {
          * 
          * 
          */
+        // sendFileMessage(recipientId, fileName) {
+        //     var messageData = {
+        //         recipient: {
+        //             id: recipientId
+        //         },
+        //         message: {
+        //             attachment: {
+        //                 type: "file",
+        //                 payload: {
+        //                     url: config.serverURL + fileName
+        //                 }
+        //             }
+        //         }
+        //     };
 
-    }, {
-        key: 'sendFileMessage',
-        value: function sendFileMessage(recipientId, fileName) {
-            var messageData = {
-                recipient: {
-                    id: recipientId
-                },
-                message: {
-                    attachment: {
-                        type: "file",
-                        payload: {
-                            url: config.serverURL + fileName
-                        }
-                    }
-                }
-            };
-
-            this.callSendAPI(messageData);
-        }
+        //     this.callSendAPI(messageData);
+        // }
 
         /** Send a button message using the Send API.
          *
@@ -626,31 +615,28 @@ var _class = function () {
          * 
          * @param {*} recipientId 
          */
+        // sendAccountLinking(recipientId){
+        //     var messageData = {
+        //         recipient: {
+        //             id: recipientId
+        //         },
+        //         message: {
+        //             attachment: {
+        //                 type: "template",
+        //                 payload: {
+        //                     template_type: "button",
+        //                     text: "Welcome. Link your account.",
+        //                     buttons: [{
+        //                         type: "account_link",
+        //                         url: config.serverURL + "/authorize"
+        //                     }]
+        //                 }
+        //             }
+        //         }
+        //     };
 
-    }, {
-        key: 'sendAccountLinking',
-        value: function sendAccountLinking(recipientId) {
-            var messageData = {
-                recipient: {
-                    id: recipientId
-                },
-                message: {
-                    attachment: {
-                        type: "template",
-                        payload: {
-                            template_type: "button",
-                            text: "Welcome. Link your account.",
-                            buttons: [{
-                                type: "account_link",
-                                url: config.serverURL + "/authorize"
-                            }]
-                        }
-                    }
-                }
-            };
-
-            callSendAPI(messageData);
-        }
+        //     callSendAPI(messageData);
+        // }
 
         /** Send Text Message
          * 

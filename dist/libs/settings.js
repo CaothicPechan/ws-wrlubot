@@ -16,7 +16,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = function (app, constants) {
     var port = 3000;
-    var fbService = new _fbProvider2.default(constants.fb.graphMsgURL, constants.fb.pageToken);
+    var fbService = new _fbProvider2.default(constants.fb.graphMsgURL, constants.fb.pageToken, constants.fb.appSecret);
 
     if (constants) {
         port = constants.env.port ? constants.env.port : port;
