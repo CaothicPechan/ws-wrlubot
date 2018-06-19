@@ -18,7 +18,7 @@ import { Button, Element } from '../../models/facebookObjects';
  * @argument {String} pageToken         Facebook token page
  */
 
-export default class {
+export class FbProvider{
 
     constructor(graphMsgURL, pageToken, appSecret){
         this.constants = {};

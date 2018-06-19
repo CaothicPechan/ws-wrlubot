@@ -3,6 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+exports.DfProvider = undefined;
 
 var _dialogflow = require('dialogflow');
 
@@ -42,11 +43,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  *                                              default "en-US"
  */
 
-var _class = function () {
-    function _class(googleProjectId, fbService) {
+var DfProvider = exports.DfProvider = function () {
+    function DfProvider(googleProjectId, fbService) {
         var languageCode = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'en-US';
 
-        _classCallCheck(this, _class);
+        _classCallCheck(this, DfProvider);
 
         this.googleProjectId = googleProjectId;
         this.languageCode = languageCode;
@@ -70,7 +71,7 @@ var _class = function () {
      */
 
 
-    _class.prototype.sendTextQueryToApiAi = function () {
+    DfProvider.prototype.sendTextQueryToApiAi = function () {
         var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(sessionIds, handleApiAiResponse, sender, text) {
             var params = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : {};
             var sessionPath, request, responses, result;
@@ -136,7 +137,7 @@ var _class = function () {
      */
 
 
-    _class.prototype.sendEventToApiAi = function () {
+    DfProvider.prototype.sendEventToApiAi = function () {
         var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(sessionIds, handleApiAiResponse, sender, event) {
             var params = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : {};
             var sessionPath, request, responses, result;
@@ -179,8 +180,6 @@ var _class = function () {
         return sendEventToApiAi;
     }();
 
-    return _class;
+    return DfProvider;
 }();
-
-exports.default = _class;
 //# sourceMappingURL=dfProvider.js.map

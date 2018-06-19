@@ -44,11 +44,7 @@ var _facebookObjects = require('./models/facebookObjects');
 
 var _fbProvider = require('./providers/facebook/fbProvider');
 
-var _fbProvider2 = _interopRequireDefault(_fbProvider);
-
 var _dfProvider = require('./providers/dialogflow/dfProvider');
-
-var _dfProvider2 = _interopRequireDefault(_dfProvider);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -59,8 +55,8 @@ var app = (0, _express2.default)();
 
 (0, _init2.default)(app);
 
-var fbService = new _fbProvider2.default(_config.constants.fb.graphMsgURL, _config.constants.fb.pageToken, _config.constants.fb.appSecret);
-var dfService = new _dfProvider2.default(_config.constants.googleProjectId, fbService);
+var fbService = new _fbProvider.FbProvider(_config.constants.fb.graphMsgURL, _config.constants.fb.pageToken, _config.constants.fb.appSecret);
+var dfService = new _dfProvider.DfProvider(_config.constants.googleProjectId, fbService);
 
 /*
  * All callbacks for Messenger are POST-ed. They will be sent to the same

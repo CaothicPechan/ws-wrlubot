@@ -25,7 +25,7 @@ import structjson from './structjson'
  *                                              default "en-US"
  */
 
-export default class {
+export class DfProvider{
     
     constructor(googleProjectId, fbService, languageCode = 'en-US'){
         

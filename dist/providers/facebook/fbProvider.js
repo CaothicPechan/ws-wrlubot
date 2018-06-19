@@ -3,6 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+exports.FbProvider = undefined;
 
 var _request = require('request');
 
@@ -33,9 +34,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  * @argument {String} pageToken         Facebook token page
  */
 
-var _class = function () {
-    function _class(graphMsgURL, pageToken, appSecret) {
-        _classCallCheck(this, _class);
+var FbProvider = exports.FbProvider = function () {
+    function FbProvider(graphMsgURL, pageToken, appSecret) {
+        _classCallCheck(this, FbProvider);
 
         this.constants = {};
         this.constants.graphMsgURL = graphMsgURL;
@@ -54,7 +55,7 @@ var _class = function () {
      */
 
 
-    _class.prototype.handleMessageAttachments = function handleMessageAttachments(messageAttachments, senderID) {
+    FbProvider.prototype.handleMessageAttachments = function handleMessageAttachments(messageAttachments, senderID) {
         this.sendTextMessage(senderID, "Attachment received. Thank you.");
     };
 
@@ -66,7 +67,7 @@ var _class = function () {
      */
 
 
-    _class.prototype.handleEcho = function handleEcho(messageId, appId, metadata) {
+    FbProvider.prototype.handleEcho = function handleEcho(messageId, appId, metadata) {
         console.log('Received echo for message ' + messageId + ' and app ' + appId + ' with metadata ' + metadata);
     };
 
@@ -77,7 +78,7 @@ var _class = function () {
      */
 
 
-    _class.prototype.handleMessage = function handleMessage(message, sender) {
+    FbProvider.prototype.handleMessage = function handleMessage(message, sender) {
 
         switch (message.type) {
             case 0:
@@ -128,7 +129,7 @@ var _class = function () {
      */
 
 
-    _class.prototype.handleCardMessages = function handleCardMessages(messages, sender) {
+    FbProvider.prototype.handleCardMessages = function handleCardMessages(messages, sender) {
         var elements = [];
 
         if (messages) {
@@ -194,7 +195,7 @@ var _class = function () {
      *
      */
 
-    _class.prototype.receivedMessageRead = function receivedMessageRead(event) {
+    FbProvider.prototype.receivedMessageRead = function receivedMessageRead(event) {
         var senderID = event.sender.id;
         var recipientID = event.recipient.id;
 
@@ -214,7 +215,7 @@ var _class = function () {
      *
      */
 
-    _class.prototype.receivedAccountLink = function receivedAccountLink(event) {
+    FbProvider.prototype.receivedAccountLink = function receivedAccountLink(event) {
         var senderID = event.sender.id;
         var recipientID = event.recipient.id;
 
@@ -233,7 +234,7 @@ var _class = function () {
      */
 
 
-    _class.prototype.receivedDeliveryConfirmation = function receivedDeliveryConfirmation(event) {
+    FbProvider.prototype.receivedDeliveryConfirmation = function receivedDeliveryConfirmation(event) {
         var senderID = event.sender.id;
         var recipientID = event.recipient.id;
         var delivery = event.delivery;
@@ -269,7 +270,7 @@ var _class = function () {
      */
 
 
-    _class.prototype.receivedAuthentication = function receivedAuthentication(event) {
+    FbProvider.prototype.receivedAuthentication = function receivedAuthentication(event) {
         var senderID = event.sender.id;
         var recipientID = event.recipient.id;
         var timeOfAuth = event.timestamp;
@@ -289,7 +290,7 @@ var _class = function () {
      *
      */
 
-    _class.prototype.verifyRequestSignature = function verifyRequestSignature(req, res, buf) {
+    FbProvider.prototype.verifyRequestSignature = function verifyRequestSignature(req, res, buf) {
         var signature = req.headers["x-hub-signature"];
         console.log('verifyRequestSignature');
         console.log(this);
@@ -318,7 +319,7 @@ var _class = function () {
      */
 
 
-    _class.prototype.sendReceiptMessage = function sendReceiptMessage(recipientId, recipient_name, currency, payment_method, timestamp, elements, address, summary, adjustments) {
+    FbProvider.prototype.sendReceiptMessage = function sendReceiptMessage(recipientId, recipient_name, currency, payment_method, timestamp, elements, address, summary, adjustments) {
 
         var receiptId = "order" + Math.floor(Math.random() * 1000);
         var messageData = {
@@ -352,7 +353,7 @@ var _class = function () {
      */
 
 
-    _class.prototype.sendQuickReply = function sendQuickReply(recipientId, text, replies, metadata) {
+    FbProvider.prototype.sendQuickReply = function sendQuickReply(recipientId, text, replies, metadata) {
         var messageData = {
             recipient: {
                 id: recipientId
@@ -371,7 +372,7 @@ var _class = function () {
      */
 
 
-    _class.prototype.sendImageMessage = function sendImageMessage(recipientId, imageUrl) {
+    FbProvider.prototype.sendImageMessage = function sendImageMessage(recipientId, imageUrl) {
         var messageData = {
             recipient: {
                 id: recipientId
@@ -482,7 +483,7 @@ var _class = function () {
      */
 
 
-    _class.prototype.sendButtonMessage = function sendButtonMessage(recipientId, text, buttons) {
+    FbProvider.prototype.sendButtonMessage = function sendButtonMessage(recipientId, text, buttons) {
 
         var messageData = {
             recipient: {
@@ -510,7 +511,7 @@ var _class = function () {
      */
 
 
-    _class.prototype.sendGenericMessage = function sendGenericMessage(recipientId, elements) {
+    FbProvider.prototype.sendGenericMessage = function sendGenericMessage(recipientId, elements) {
 
         var messageData = {
             recipient: {
@@ -536,7 +537,7 @@ var _class = function () {
      */
 
 
-    _class.prototype.sendReadReceipt = function sendReadReceipt(recipientId) {
+    FbProvider.prototype.sendReadReceipt = function sendReadReceipt(recipientId) {
 
         console.log("Sending a read receipt to mark message as seen");
 
@@ -556,7 +557,7 @@ var _class = function () {
      */
 
 
-    _class.prototype.sendTypingOn = function sendTypingOn(recipientId) {
+    FbProvider.prototype.sendTypingOn = function sendTypingOn(recipientId) {
 
         console.log("Turning typing indicator on");
 
@@ -576,7 +577,7 @@ var _class = function () {
      */
 
 
-    _class.prototype.sendTypingOff = function sendTypingOff(recipientId) {
+    FbProvider.prototype.sendTypingOff = function sendTypingOff(recipientId) {
 
         console.log("Turning typing indicator off");
         var messageData = {
@@ -623,7 +624,7 @@ var _class = function () {
      */
 
 
-    _class.prototype.sendTextMessage = function sendTextMessage(recipientId, text) {
+    FbProvider.prototype.sendTextMessage = function sendTextMessage(recipientId, text) {
 
         var messageData = {
             recipient: {
@@ -645,7 +646,7 @@ var _class = function () {
      */
 
 
-    _class.prototype.callSendAPI = function callSendAPI(messageData) {
+    FbProvider.prototype.callSendAPI = function callSendAPI(messageData) {
         (0, _request2.default)({
             uri: this.constants.graphMsgURL,
             qs: {
@@ -670,8 +671,6 @@ var _class = function () {
         });
     };
 
-    return _class;
+    return FbProvider;
 }();
-
-exports.default = _class;
 //# sourceMappingURL=fbProvider.js.map
