@@ -18,17 +18,13 @@ import { Button, Element } from '../../models/facebookObjects';
  * @argument {String} pageToken         Facebook token page
  */
 
-export class FbProvider{
+export default class {
 
     constructor(graphMsgURL, pageToken, appSecret){
         this.constants = {};
         this.constants.graphMsgURL = graphMsgURL;
         this.constants.pageToken = pageToken;
         this.constants.appSecret = appSecret;
-    }
-
-    call constructor(graphMsgURL, pageToken, appSecret){
-        return new FbProvider(graphMsgURL,pageToken, appSecret);
     }
     
     /** Handle methods

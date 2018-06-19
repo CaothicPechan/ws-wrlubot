@@ -18,8 +18,8 @@ import router from './routes/index'
 import './models/facebookObjects'
 import { Button } from './models/facebookObjects';
 
-import { FbProvider } from './providers/facebook/fbProvider'
-import { DfProvider } from './providers/dialogflow/dfProvider'
+import fbProvider from './providers/facebook/fbProvider'
+import dfProvider from './providers/dialogflow/dfProvider'
 
 
 
@@ -33,8 +33,8 @@ router(app);
 
 init(app);
 
-let fbService = new FbProvider(constants.fb.graphMsgURL, constants.fb.pageToken, constants.fb.appSecret);
-let dfService = new DfProvider(constants.googleProjectId, fbService);
+let fbService = new fbProvider(constants.fb.graphMsgURL, constants.fb.pageToken, constants.fb.appSecret);
+let dfService = new dfProvider(constants.googleProjectId, fbService);
 
 
 /*
