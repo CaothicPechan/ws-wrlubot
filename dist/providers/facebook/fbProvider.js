@@ -39,7 +39,6 @@ var _class = function () {
     function _class(graphMsgURL, pageToken, appSecret) {
         _classCallCheck(this, _class);
 
-        console.log('Called constructor' + graphMsgURL + pageToken + appSecret);
         this.constants = {};
         this.constants.graphMsgURL = graphMsgURL;
         this.constants.pageToken = pageToken;
@@ -308,6 +307,7 @@ var _class = function () {
         value: function verifyRequestSignature(req, res, buf) {
             var signature = req.headers["x-hub-signature"];
             console.log('verifyRequestSignature');
+            console.log(this.constants);
             if (!signature) {
                 throw new Error('Couldn\'t validate the signature.');
             } else {

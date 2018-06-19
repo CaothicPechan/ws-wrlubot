@@ -21,7 +21,6 @@ import { Button, Element } from '../../models/facebookObjects';
 export default class {
 
     constructor(graphMsgURL, pageToken, appSecret){
-        console.log('Called constructor' + graphMsgURL + pageToken + appSecret);
         this.constants = {};
         this.constants.graphMsgURL = graphMsgURL;
         this.constants.pageToken = pageToken;
@@ -270,6 +269,7 @@ export default class {
     verifyRequestSignature(req, res, buf){
         var signature = req.headers["x-hub-signature"];
         console.log('verifyRequestSignature');
+        console.log(this.constants);
         if (!signature) {
             throw new Error('Couldn\'t validate the signature.');
         } else {
