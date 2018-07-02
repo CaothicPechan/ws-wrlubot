@@ -73,43 +73,65 @@ export default class {
          */
         handleMessage(message, sender){
 
-            switch (message.type) {
-                case 0: //text
-                    this.sendTextMessage(sender, message.speech);
-                break;
-                
-                case 2: //quick replies
-                    let replies = [];
-                    for (var b = 0; b < message.replies.length; b++) {
-                        let reply =
-                        {
-                            "content_type": "text",
-                            "title": message.replies[b],
-                            "payload": message.replies[b]
+            switch (message.message) {
+                case "text": //text
+                    message.text.text.forEach((text) => {
+                        if (text !== '') {
+                            this.sendTextMessage(sender, text);
                         }
+                    });
+                    break;
+                case "quickReplies": //quick replies
+                    let replies = [];
+                    message.quickReplies.quickReplies.forEach((text) => {
+                        let reply =
+                            {
+                                "content_type": "text",
+                                "title": text,
+                                "payload": text
+                            }
                         replies.push(reply);
-                    }
-                    this.sendQuickReply(sender, message.title, replies);
-                break;
-                
-                case 3: //image
-                    this.sendImageMessage(sender, message.imageUrl);
-                
-                break;
-                
-                case 4:
-                    // custom payload
-                    var messageData = {
-                        recipient: {
-                            id: sender
-                        },
-                        message: message.payload.facebook
+                    });
+                    this.sendQuickReply(sender, message.quickReplies.title, replies);
+                    break;
+                case "image": //image
+                    this.sendImageMessage(sender, message.image.imageUri);
+                    break;
+            }
+        }
 
-                    };
-
-                    this.callSendAPI(messageData);
-
-                break;
+        /** Handle messages
+         * 
+         * @param {*} messages 
+         * @param {*} sender 
+         */
+        handleMessages(messages, sender){
+            let timeoutInterval = 1100;
+            let previousType ;
+            let cardTypes = [];
+            let timeout = 0;
+            for (var i = 0; i < messages.length; i++) {
+         
+                if ( previousType == "card" && (messages[i].message != "card" || i == messages.length - 1)) {
+                    timeout = (i - 1) * timeoutInterval;
+                    setTimeout(this.handleCardMessages.bind(null, cardTypes, sender), timeout);
+                    cardTypes = [];
+                    timeout = i * timeoutInterval;
+                    setTimeout(this.handleMessage.bind(null, messages[i], sender), timeout);
+                } else if ( messages[i].message == "card" && i == messages.length - 1) {
+                    cardTypes.push(messages[i]);
+                    timeout = (i - 1) * timeoutInterval;
+                    setTimeout(this.handleCardMessages.bind(null, cardTypes, sender), timeout);
+                    cardTypes = [];
+                } else if ( messages[i].message == "card") {
+                    cardTypes.push(messages[i]);
+                } else {
+                    timeout = i * timeoutInterval;
+                    setTimeout(this.handleMessage.bind(null, messages[i], sender), timeout);
+                }
+         
+                previousType = messages[i].message;
+         
             }
         }
         
@@ -120,55 +142,39 @@ export default class {
          */
         handleCardMessages(messages, sender){
             let elements = [];
-            
-            if(messages){
-                messages.map( m => {
-                    let buttons = [];
-                    
-                    m.buttons.map( b => {
-                        let isLink = (b.postback.substring(0, 4) === 'http');
-                        let button = new Button();
-                        
-                        button.title = b.text;
-                        button.url = b.postback;
-                        
-                        if (isLink) {
-                            button.type = 'web_url';
-                            
-                            // button = {
-                            //     "type": "web_url",
-                            //     "title": message.buttons[b].text,
-                            //     "url": message.buttons[b].postback
-                            // }
-                        } else {
-                            button.type = 'postback';
-                            // button = {
-                            //     "type": "postback",
-                            //     "title": message.buttons[b].text,
-                            //     "payload": message.buttons[b].postback
-                            // }
+            for (var m = 0; m < messages.length; m++) {
+                let message = messages[m];
+        
+                let buttons = [];
+                for (var b = 0; b < message.card.buttons.length; b++) {
+                    let isLink = (message.card.buttons[b].postback.substring(0, 4) === 'http');
+                    let button;
+                    if (isLink) {
+                        button = {
+                            "type": "web_url",
+                            "title": message.card.buttons[b].text,
+                            "url": message.card.buttons[b].postback
                         }
-                        buttons.push(button);
-                    });
-
-                    let element = new Element();
-                    element.title = m.title;
-                    element.image_url = m.imageUrl;
-                    element.subtitle = m.subtitle;
-                    element.buttons = buttons;
-
-                    // let element = {
-                    //     "title": message.title,
-                    //     "image_url":message.imageUrl,
-                    //     "subtitle": message.subtitle,
-                    //     "buttons": buttons
-                    // };
-                    elements.push(element);
-                });
+                    } else {
+                        button = {
+                            "type": "postback",
+                            "title": message.card.buttons[b].text,
+                            "payload": message.card.buttons[b].postback
+                        }
+                    }
+                    buttons.push(button);
+                }
+        
+        
+                let element = {
+                    "title": message.card.title,
+                    "image_url":message.card.imageUri,
+                    "subtitle": message.card.subtitle,
+                    "buttons": buttons
+                };
+                elements.push(element);
             }
-
-            console.log('card message');
-            console.log(elements);
+            
             this.sendGenericMessage(sender, elements);
         }
 
