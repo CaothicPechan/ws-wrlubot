@@ -96,7 +96,7 @@ export default class {
             queryInput: {
                 event: {
                     name: event,
-                    parameters: this.structjson.jsonToStructProto(params), //Dialogflow's v2 API uses gRPC. You'll need a jsonToStructProto method to convert your JavaScript object to a proto struct.
+                    parameters: structjson.jsonToStructProto(params), //Dialogflow's v2 API uses gRPC. You'll need a jsonToStructProto method to convert your JavaScript object to a proto struct.
                     languageCode: this.languageCode,
                 },
             }
