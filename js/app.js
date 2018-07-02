@@ -195,16 +195,16 @@ function handleApiAiResponse(sender, response) {
   
 	fbService.sendTypingOff(sender);
   
-	 if (isDefined(action)) {
+	 if (action) {
 		 handleApiAiAction(sender, action, messages, contexts, parameters);
-	 } else if (isDefined(messages) ) {
+	 } else if (messages ) {
 	   fbService.handleMessages(messages);
-	} else if (responseText == '' && !isDefined(action)) {
+	} else if (responseText == '' && !action) {
 	   //api ai could not evaluate input.
 	   //console.log('Unknown query' + response.result.resolvedQuery);
 	   fbService.sendTextMessage(sender, "I'm not sure what you want. Can you be more specific?");
   
-	} else if (isDefined(responseText)) {
+	} else if (responseText) {
 	   fbService.sendTextMessage(sender, responseText);
 	}
  }
