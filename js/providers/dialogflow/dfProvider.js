@@ -53,7 +53,7 @@ export default class {
      * 
      */
     async sendTextQueryToApiAi(sessionIds, handleApiAiResponse, sender, text, params = {}) {
-        const sessionPath = sessionClient.sessionPath(this.googleProjectId, sessionIds.get(sender));
+        const sessionPath = this.sessionClient.sessionPath(this.googleProjectId, sessionIds.get(sender));
         this.fbService.sendTypingOn(sender);
  
         const request = {
@@ -70,7 +70,7 @@ export default class {
                 }
             }
         };
-        const responses = await sessionClient.detectIntent(request);
+        const responses = await this.sessionClient.detectIntent(request);
         const result = responses[0].queryResult;
         
         handleApiAiResponse(sender, result);
@@ -90,7 +90,7 @@ export default class {
      * 
      */
     async sendEventToApiAi(sessionIds, handleApiAiResponse, sender, event, params = {}) {
-        const sessionPath = sessionClient.sessionPath(this.googleProjectId, sessionIds.get(sender));
+        const sessionPath = this.sessionClient.sessionPath(this.googleProjectId, sessionIds.get(sender));
         const request = {
             session: sessionPath,
             queryInput: {
@@ -103,7 +103,7 @@ export default class {
         };
  
  
-        const responses = await sessionClient.detectIntent(request);
+        const responses = await this.sessionClient.detectIntent(request);
  
         const result = responses[0].queryResult;
         handleApiAiResponse(sender, result);
