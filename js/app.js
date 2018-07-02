@@ -37,6 +37,8 @@ let fbService = new fbProvider(constants.fb.graphMsgURL, constants.fb.pageToken,
 let dfService = new dfProvider(constants.googleProjectId, fbService);
 
 
+const sessionIds = new Map();
+
 /*
  * All callbacks for Messenger are POST-ed. They will be sent to the same
  * webhook. Be sure to subscribe your app to your page to receive callbacks
@@ -84,6 +86,17 @@ app.post('/webhook/', function (req, res) {
 });
 
 
+function setSessionAndUser(senderID) {
+	if (!sessionIds.has(senderID)) {
+		sessionIds.set(senderID, uuid.v1());
+	}
+	if (!usersMap.has(senderID)) {
+		userService.addUser(function(user){
+			usersMap.set(senderID, user);
+		}, senderID);
+	}
+}
+
 function receivedMessage(event) {
 
 	var senderID = event.sender.id;
@@ -91,7 +104,7 @@ function receivedMessage(event) {
 	var timeOfMessage = event.timestamp;
 	var message = event.message;
 
-	//setSessionAndUser(senderID);
+	setSessionAndUser(senderID);
 
 	//console.log("Received message for user %d and page %d at %d with message:", senderID, recipientID, timeOfMessage);
 	//console.log(JSON.stringify(message));
@@ -140,7 +153,7 @@ function receivedPostback(event) {
 	// button for Structured Messages.
 	var payload = event.postback.payload;
 
-	//setSessionAndUser(senderID);
+	setSessionAndUser(senderID);
 
 	switch (payload) {
 		case 'FUN_NEWS':
