@@ -38,6 +38,8 @@ let dfService = new dfProvider(constants.googleProjectId, fbService);
 
 
 const sessionIds = new Map();
+const usersMap = new Map();
+
 
 /*
  * All callbacks for Messenger are POST-ed. They will be sent to the same
