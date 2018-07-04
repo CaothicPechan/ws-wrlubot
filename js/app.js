@@ -40,8 +40,8 @@ chatbot.start(app,(event) => {
 	receivedMessage(event);
 });
 
-// let fbService = new fbProvider(constants.fb.graphMsgURL, constants.fb.pageToken, constants.fb.appSecret, constants.fb.verifyToken);
-// let dfService = new dfProvider(constants.googleProjectId, fbService);
+let fbService = new fbProvider(constants.fb.graphMsgURL, constants.fb.pageToken, constants.fb.appSecret, constants.fb.verifyToken);
+let dfService = new dfProvider(constants.googleProjectId, fbService);
 
 
 const sessionIds = new Map();
