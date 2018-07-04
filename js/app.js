@@ -40,7 +40,9 @@ let dfService = new dfProvider(constants.googleProjectId, fbService);
 const sessionIds = new Map();
 const usersMap = new Map();
 
-fbService.setWebhook(app, receivedMessage(event));
+fbService.setWebhook(app, (event) => {
+	receivedMessage(event);
+});
 
 
 /*
