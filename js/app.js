@@ -10,6 +10,7 @@ import { Strategy } from 'passport-facebook'
 import session from 'express-session'
 import uuid from 'uuid'
 
+import wrluLib from './wrLuLib'
 import init from './libs/init'
 import settings from './libs/settings'
 
@@ -33,16 +34,22 @@ router(app);
 
 init(app);
 
-let fbService = new fbProvider(constants.fb.graphMsgURL, constants.fb.pageToken, constants.fb.appSecret, constants.fb.verifyToken);
-let dfService = new dfProvider(constants.googleProjectId, fbService);
+let wrluLib = new wrluLib(app, constants);
 
-
-const sessionIds = new Map();
-const usersMap = new Map();
-
-fbService.setWebhook(app, (event) => {
+wrluLib.start(app,(event) => {
 	receivedMessage(event);
 });
+
+// let fbService = new fbProvider(constants.fb.graphMsgURL, constants.fb.pageToken, constants.fb.appSecret, constants.fb.verifyToken);
+// let dfService = new dfProvider(constants.googleProjectId, fbService);
+
+
+// const sessionIds = new Map();
+// const usersMap = new Map();
+
+// fbService.setWebhook(app, (event) => {
+// 	receivedMessage(event);
+// });
 
 
 /*

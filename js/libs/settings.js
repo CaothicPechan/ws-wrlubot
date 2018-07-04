@@ -5,7 +5,7 @@ import fbProvider from '../providers/facebook/fbProvider'
 
 export default (app, constants) => {
     let port = 3000;
-    let fbService = new fbProvider(constants.fb.graphMsgURL, constants.fb.pageToken, constants.fb.appSecret);
+    let fbService = new fbProvider(constants.fb.graphMsgURL, constants.fb.pageToken, constants.fb.appSecret, constants.fb.verifyToken);
     
     if(constants){
         port = constants.env.port ? constants.env.port : port;
