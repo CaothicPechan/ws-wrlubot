@@ -53,7 +53,7 @@ export default class {
         /**
          * 
          */
-        setWebhook(app){
+        setWebhook(app, callback){
 
             console.log('Setting webhook...')
 
@@ -87,7 +87,8 @@ export default class {
                             if (messagingEvent.optin) {
                                 this.receivedAuthentication(messagingEvent);
                             } else if (messagingEvent.message) {
-                                receivedMessage(messagingEvent);
+                                // receivedMessage(messagingEvent);
+                                callback(messagingEvent);
                             } else if (messagingEvent.delivery) {
                                 this.receivedDeliveryConfirmation(messagingEvent);
                             } else if (messagingEvent.postback) {
