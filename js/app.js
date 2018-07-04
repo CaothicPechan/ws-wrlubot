@@ -44,7 +44,7 @@ chatbot.start(app,(event) => {
 // let dfService = new dfProvider(constants.googleProjectId, fbService);
 
 
-// const sessionIds = new Map();
+const sessionIds = new Map();
 // const usersMap = new Map();
 
 // fbService.setWebhook(app, (event) => {
