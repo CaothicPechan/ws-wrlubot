@@ -34,9 +34,9 @@ router(app);
 
 init(app);
 
-let wrluLib = new wrluLib(app, constants);
+let chatbot = new wrluLib(app, constants);
 
-wrluLib.start(app,(event) => {
+chatbot.start(app,(event) => {
 	receivedMessage(event);
 });
 
