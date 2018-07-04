@@ -20,11 +20,13 @@ import { Button, Element } from '../../models/facebookObjects';
 
 export default class {
 
-    constructor(graphMsgURL, pageToken, appSecret){
+    constructor(graphMsgURL, pageToken, appSecret, verifyToken, webhookUri = '/webhook/'){
         this.constants = {};
         this.constants.graphMsgURL = graphMsgURL;
         this.constants.pageToken = pageToken;
         this.constants.appSecret = appSecret;
+        this.constants.verifyToken = verifyToken;
+        this.constants.webhookUri = webhookUri;
         
         this.handleMessage = this.handleMessage.bind(this);
         this.handleMessageAttachments = this.handleMessageAttachments.bind(this);
@@ -36,12 +38,75 @@ export default class {
         this.receivedAuthentication = this. receivedAuthentication.bind(this);
         this.receivedDeliveryConfirmation = this.receivedDeliveryConfirmation.bind(this);
         
+        this.setWebhook = this.setWebhook.bind(this);
         this.callSendAPI = this.callSendAPI.bind(this);
         this.sendButtonMessage = this.sendButtonMessage.bind(this);
         this.sendGenericMessage = this.sendGenericMessage.bind(this);
         this.verifyRequestSignature = this.verifyRequestSignature.bind(this);
 
     }
+
+    /**
+     * 
+     * 
+     */
+        /**
+         * 
+         */
+        setWebhook(app){
+
+            console.log('Setting webhook...')
+
+            app.get(this.webhookUri, (req, res) => {
+                if (req.query['hub.mode'] === 'subscribe' && req.query['hub.verify_token'] === this.constants.verifyToken) {
+                    res.status(200).send(req.query['hub.challenge']);
+                } else {
+                    console.error("Failed validation. Make sure the validation tokens match.");
+                    res.sendStatus(403);
+                }
+            });
+
+            app.post(this.webhookUri,(req, res) => {
+                var data = req.body;
+                console.log(JSON.stringify(data));
+
+
+                // Make sure this is a page subscription                
+                if (data.object == 'page') {
+
+                    /**
+                     * Iterate over each entry 
+                     * There may be multiple if batched
+                     * */
+                     
+                    data.entry.forEach((pageEntry) => {
+                        var pageID = pageEntry.id;
+                        var timeOfEvent = pageEntry.time;
+                        
+                        pageEntry.messaging.forEach((messagingEvent) => {
+                            if (messagingEvent.optin) {
+                                this.receivedAuthentication(messagingEvent);
+                            } else if (messagingEvent.message) {
+                                receivedMessage(messagingEvent);
+                            } else if (messagingEvent.delivery) {
+                                this.receivedDeliveryConfirmation(messagingEvent);
+                            } else if (messagingEvent.postback) {
+                                console.log('Postback');
+                                // receivedPostback(messagingEvent);
+                            } else if (messagingEvent.read) {
+                                this.receivedMessageRead(messagingEvent);
+                            } else if (messagingEvent.account_linking) {
+                                this.receivedAccountLink(messagingEvent);
+                            } else {
+                                console.log("Webhook received unknown messagingEvent: ", messagingEvent);
+                            }
+                        });
+                    });
+
+                    res.sendStatus(200);
+                }
+            });
+        }
     
     /** Handle methods **
      * 

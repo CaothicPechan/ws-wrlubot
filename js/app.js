@@ -33,12 +33,14 @@ router(app);
 
 init(app);
 
-let fbService = new fbProvider(constants.fb.graphMsgURL, constants.fb.pageToken, constants.fb.appSecret);
+let fbService = new fbProvider(constants.fb.graphMsgURL, constants.fb.pageToken, constants.fb.appSecret, constants.fb.verifyToken);
 let dfService = new dfProvider(constants.googleProjectId, fbService);
 
 
 const sessionIds = new Map();
 const usersMap = new Map();
+
+fbService.setWebhook(app);
 
 
 /*
@@ -48,44 +50,44 @@ const usersMap = new Map();
  * https://developers.facebook.com/docs/messenger-platform/product-overview/setup#subscribe_app
  *
  */
-app.post('/webhook/', function (req, res) {
-	var data = req.body;
-	console.log(JSON.stringify(data));
+// app.post('/webhook/', function (req, res) {
+// 	var data = req.body;
+// 	console.log(JSON.stringify(data));
 
 
-	// Make sure this is a page subscription
-	if (data.object == 'page') {
+// 	// Make sure this is a page subscription
+// 	if (data.object == 'page') {
 
-		// Iterate over each entry
-		// There may be multiple if batched
-		data.entry.forEach(function (pageEntry) {
-			var pageID = pageEntry.id;
-			var timeOfEvent = pageEntry.time;
-			// Iterate over each messaging event
-			pageEntry.messaging.forEach(function (messagingEvent) {
-				if (messagingEvent.optin) {
-					fbService.receivedAuthentication(messagingEvent);
-				} else if (messagingEvent.message) {
-					receivedMessage(messagingEvent);
-				} else if (messagingEvent.delivery) {
-					fbService.receivedDeliveryConfirmation(messagingEvent);
-				} else if (messagingEvent.postback) {
-					receivedPostback(messagingEvent);
-				} else if (messagingEvent.read) {
-					fbService.receivedMessageRead(messagingEvent);
-				} else if (messagingEvent.account_linking) {
-					fbService.receivedAccountLink(messagingEvent);
-				} else {
-					console.log("Webhook received unknown messagingEvent: ", messagingEvent);
-				}
-			});
-		});
+// 		// Iterate over each entry
+// 		// There may be multiple if batched
+// 		data.entry.forEach((pageEntry) => {
+// 			var pageID = pageEntry.id;
+// 			var timeOfEvent = pageEntry.time;
+// 			// Iterate over each messaging event
+// 			pageEntry.messaging.forEach((messagingEvent) => {
+// 				if (messagingEvent.optin) {
+// 					fbService.receivedAuthentication(messagingEvent);
+// 				} else if (messagingEvent.message) {
+// 					receivedMessage(messagingEvent);
+// 				} else if (messagingEvent.delivery) {
+// 					fbService.receivedDeliveryConfirmation(messagingEvent);
+// 				} else if (messagingEvent.postback) {
+// 					receivedPostback(messagingEvent);
+// 				} else if (messagingEvent.read) {
+// 					fbService.receivedMessageRead(messagingEvent);
+// 				} else if (messagingEvent.account_linking) {
+// 					fbService.receivedAccountLink(messagingEvent);
+// 				} else {
+// 					console.log("Webhook received unknown messagingEvent: ", messagingEvent);
+// 				}
+// 			});
+// 		});
 
-		// Assume all went well.
-		// You must send back a 200, within 20 seconds
-		res.sendStatus(200);
-	}
-});
+// 		// Assume all went well.
+// 		// You must send back a 200, within 20 seconds
+// 		res.sendStatus(200);
+// 	}
+// });
 
 
 function setSessionAndUser(senderID) {
