@@ -355,8 +355,7 @@ export default class {
 
         verifyRequestSignature(req, res, buf){
             var signature = req.headers["x-hub-signature"];
-            console.log('verifyRequestSignature');
-            console.log(this);
+            console.log('Verifying RequestSignature...');
             if (!signature) {
                 throw new Error('Couldn\'t validate the signature.');
             } else {
