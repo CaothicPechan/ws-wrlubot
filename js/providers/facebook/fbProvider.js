@@ -57,7 +57,7 @@ export default class {
 
             console.log('Setting webhook...')
 
-            app.get(this.webhookUri, (req, res) => {
+            app.get(this.constants.webhookUri, (req, res) => {
                 if (req.query['hub.mode'] === 'subscribe' && req.query['hub.verify_token'] === this.constants.verifyToken) {
                     res.status(200).send(req.query['hub.challenge']);
                 } else {
@@ -66,7 +66,7 @@ export default class {
                 }
             });
 
-            app.post(this.webhookUri,(req, res) => {
+            app.post(this.constants.webhookUri,(req, res) => {
                 var data = req.body;
                 console.log(JSON.stringify(data));
 
