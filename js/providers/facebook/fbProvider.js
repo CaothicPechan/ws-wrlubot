@@ -1,6 +1,6 @@
 import request from 'request'
 import crypto from 'crypto'
-import { Button, Element } from '../../models/facebookObjects';
+import { fbResponse } from '../../models/facebookObjects';
 
 
 /**
@@ -28,6 +28,8 @@ export default class {
         this.constants.verifyToken = verifyToken;
         this.constants.webhookUri = webhookUri;
         
+        this.fbResponse = fbResponse;
+
         this.handleMessage = this.handleMessage.bind(this);
         this.handleMessageAttachments = this.handleMessageAttachments.bind(this);
         this.handleEcho = this.handleEcho.bind(this);
@@ -85,19 +87,21 @@ export default class {
                         
                         pageEntry.messaging.forEach((messagingEvent) => {
                             if (messagingEvent.optin) {
-                                this.receivedAuthentication(messagingEvent);
+                                this.receivedAuthentication(messagingEvent,callback);
                             } else if (messagingEvent.message) {
-                                // receivedMessage(messagingEvent);
-                                callback(messagingEvent);
+                                this.fbResponse.payload = messagingEvent;
+                                this.fbResponse.eventType = 'message';
+                                callback(this.fbResponse);
                             } else if (messagingEvent.delivery) {
-                                this.receivedDeliveryConfirmation(messagingEvent);
+                                this.receivedDeliveryConfirmation(messagingEvent,callback);
                             } else if (messagingEvent.postback) {
-                                console.log('Postback');
-                                // receivedPostback(messagingEvent);
+                                this.fbResponse.payload = messagingEvent;
+                                this.fbResponse.eventType = 'postback';
+                                callback(this.fbResponse);
                             } else if (messagingEvent.read) {
-                                this.receivedMessageRead(messagingEvent);
+                                this.receivedMessageRead(messagingEvent,callback);
                             } else if (messagingEvent.account_linking) {
-                                this.receivedAccountLink(messagingEvent);
+                                this.receivedAccountLink(messagingEvent,callback);
                             } else {
                                 console.log("Webhook received unknown messagingEvent: ", messagingEvent);
                             }
@@ -267,6 +271,10 @@ export default class {
 
             console.log("Received message read event for watermark %d and sequence " +
                 "number %d", watermark, sequenceNumber);
+
+            this.fbResponse.payload = event;
+            this.fbResponse.eventType = 'recieved-message';
+            callback(this.fbResponse);
         }
 
         /** Account Link Event
@@ -287,6 +295,10 @@ export default class {
 
             console.log("Received account link event with for user %d with status %s " +
                 "and auth code %s ", senderID, status, authCode);
+
+            this.fbResponse.payload = event;
+            this.fbResponse.eventType = 'account-link';
+            callback(this.fbResponse);
         }
 
         /** Delivery Confirmation Event
@@ -296,7 +308,7 @@ export default class {
          * these fields at @link https://developers.facebook.com/docs/messenger-platform/webhook-reference/message-delivered
          *
          */
-        receivedDeliveryConfirmation(event){
+        receivedDeliveryConfirmation(event, callback){
             var senderID = event.sender.id;
             var recipientID = event.recipient.id;
             var delivery = event.delivery;
@@ -312,6 +324,10 @@ export default class {
             }
 
             console.log("All message before %d were delivered.", watermark);
+            
+            this.fbResponse.payload = event;
+            this.fbResponse.eventType = 'delivery-confirm';
+            callback(this.fbResponse);
         }
 
         /** Authorization Event
@@ -342,6 +358,10 @@ export default class {
                 timeOfAuth);
 
             this.sendTextMessage(senderID, "Authentication successful");
+            
+            this.fbResponse.payload = event;
+            this.fbResponse.eventType = 'delivery-confirm';
+            callback(this.fbResponse);
         }
 
         /** Verify that the callback came from Facebook. 

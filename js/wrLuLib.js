@@ -19,8 +19,8 @@ export default class {
     }
 
     start(app, callback){
-        this.fbService.setWebhook(app, (event) => {
-            callback(event);
+        this.fbService.setWebhook(app, (res) => {
+            callback(res);
         });        
     }
 

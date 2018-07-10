@@ -36,8 +36,8 @@ init(app);
 
 let chatbot = new wrluLib(app, constants);
 
-chatbot.start(app,(event) => {
-	receivedMessage(event);
+chatbot.start(app,(res) => {
+	receivedMessage(res.payload);
 });
 
 let fbService = new fbProvider(constants.fb.graphMsgURL, constants.fb.pageToken, constants.fb.appSecret, constants.fb.verifyToken);
