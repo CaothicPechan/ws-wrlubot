@@ -16,9 +16,6 @@ import settings from './libs/settings'
 
 import router from './routes/index'
 
-import './models/facebookObjects'
-import { Button } from './models/facebookObjects';
-
 import fbProvider from './providers/facebook/fbProvider'
 import dfProvider from './providers/dialogflow/dfProvider'
 
@@ -37,7 +34,9 @@ init(app);
 let chatbot = new wrluLib(app, constants);
 
 chatbot.start(app,(res) => {
-	receivedMessage(res.payload);
+	if(res === 200){
+		console.log('<--confirmed-->');
+	}
 });
 
 let fbService = new fbProvider(constants.fb.graphMsgURL, constants.fb.pageToken, constants.fb.appSecret, constants.fb.verifyToken);

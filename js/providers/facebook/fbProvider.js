@@ -1,6 +1,6 @@
 import request from 'request'
 import crypto from 'crypto'
-import { fbResponse } from '../../models/facebookObjects';
+import { wrResponse } from '../../models/commonObjects';
 
 
 /**
@@ -28,7 +28,7 @@ export default class {
         this.constants.verifyToken = verifyToken;
         this.constants.webhookUri = webhookUri;
         
-        this.fbResponse = fbResponse;
+        this.wrResponse = wrResponse;
 
         this.handleMessage = this.handleMessage.bind(this);
         this.handleMessageAttachments = this.handleMessageAttachments.bind(this);
@@ -89,15 +89,15 @@ export default class {
                             if (messagingEvent.optin) {
                                 this.receivedAuthentication(messagingEvent,callback);
                             } else if (messagingEvent.message) {
-                                this.fbResponse.payload = messagingEvent;
-                                this.fbResponse.eventType = 'message';
-                                callback(this.fbResponse);
+                                this.wrResponse.payload = messagingEvent;
+                                this.wrResponse.eventType = 'message';
+                                callback(this.wrResponse);
                             } else if (messagingEvent.delivery) {
                                 this.receivedDeliveryConfirmation(messagingEvent,callback);
                             } else if (messagingEvent.postback) {
-                                this.fbResponse.payload = messagingEvent;
-                                this.fbResponse.eventType = 'postback';
-                                callback(this.fbResponse);
+                                this.wrResponse.payload = messagingEvent;
+                                this.wrResponse.eventType = 'postback';
+                                callback(this.wrResponse);
                             } else if (messagingEvent.read) {
                                 this.receivedMessageRead(messagingEvent,callback);
                             } else if (messagingEvent.account_linking) {
@@ -272,9 +272,9 @@ export default class {
             console.log("Received message read event for watermark %d and sequence " +
                 "number %d", watermark, sequenceNumber);
 
-            this.fbResponse.payload = event;
-            this.fbResponse.eventType = 'recieved-message';
-            callback(this.fbResponse);
+            this.wrResponse.payload = event;
+            this.wrResponse.eventType = 'recieved-message';
+            callback(this.wrResponse);
         }
 
         /** Account Link Event
@@ -296,9 +296,9 @@ export default class {
             console.log("Received account link event with for user %d with status %s " +
                 "and auth code %s ", senderID, status, authCode);
 
-            this.fbResponse.payload = event;
-            this.fbResponse.eventType = 'account-link';
-            callback(this.fbResponse);
+            this.wrResponse.payload = event;
+            this.wrResponse.eventType = 'account-link';
+            callback(this.wrResponse);
         }
 
         /** Delivery Confirmation Event
@@ -325,9 +325,9 @@ export default class {
 
             console.log("All message before %d were delivered.", watermark);
             
-            this.fbResponse.payload = event;
-            this.fbResponse.eventType = 'delivery-confirm';
-            callback(this.fbResponse);
+            this.wrResponse.payload = event;
+            this.wrResponse.eventType = 'delivery-confirm';
+            callback(this.wrResponse);
         }
 
         /** Authorization Event
@@ -358,10 +358,10 @@ export default class {
                 timeOfAuth);
 
             this.sendTextMessage(senderID, "Authentication successful");
-            
-            this.fbResponse.payload = event;
-            this.fbResponse.eventType = 'delivery-confirm';
-            callback(this.fbResponse);
+
+            this.wrResponse.payload = event;
+            this.wrResponse.eventType = 'delivery-confirm';
+            callback(this.wrResponse);
         }
 
         /** Verify that the callback came from Facebook. 
