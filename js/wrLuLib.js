@@ -16,6 +16,11 @@ export default class {
 
         this.start = this.start.bind(this);
         this.setSession = this.setSession.bind(this);
+        
+        this.handleResponse = this.handleResponse.bind(this);
+        this.handleFbEvent = this.handleFbEvent.bind(this);
+        this.handleDfResponse = this.handleDfResponse.bind(this);
+        this.handleDfAction = this.handleDfAction.bind(this);
     }
 
     start(app, callback){
