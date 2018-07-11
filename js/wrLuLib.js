@@ -117,24 +117,24 @@ export default class {
         let contexts = response.outputContexts;
         let parameters = response.parameters;
       
-        fbService.sendTypingOff(sender);
+        this.fbService.sendTypingOff(sender);
       
          if (action) {
             this.handleDfAction(sender, action, messages, contexts, parameters);
             console.log('<--- Action -->')
             callback(200);
          } else if (messages) {
-           fbService.handleMessages(messages);
+           this.fbService.handleMessages(messages);
            callback(200);
         } else if (responseText == '' && !action) {
             /**
              * @description On this case, DialogFlow coudn't evaluate the input, showing the unsolved query.
              */
            console.log('Unknown query' + response.result.resolvedQuery);
-           fbService.sendTextMessage(sender, "I'm not sure what you want. Can you be more specific?");
+           this.fbService.sendTextMessage(sender, "I'm not sure what you want. Can you be more specific?");
            callback(200);
         } else if (responseText) {
-           fbService.sendTextMessage(sender, responseText);
+           this.fbService.sendTextMessage(sender, responseText);
            callback(200);
         }
     }
@@ -143,7 +143,7 @@ export default class {
         switch (action) {
             default:
                 //unhandled action, just send back the text
-                fbService.handleMessages(messages, sender);
+                this.fbService.handleMessages(messages, sender);
         }
     }
 }
