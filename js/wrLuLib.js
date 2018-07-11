@@ -79,7 +79,7 @@ export default class {
             var quickReply = message.quick_reply;
 
             if (isEcho) {
-                fbService.handleEcho(messageId, appId, metadata);
+                this.fbService.handleEcho(messageId, appId, metadata);
                 return;
             } else if (quickReply) {
                 // handleQuickReply(senderID, quickReply, messageId);
@@ -88,9 +88,9 @@ export default class {
 
 
             if (messageText) {
-                dfService.sendTextQueryToApiAi(sessionIds, handleApiAiResponse, senderID, messageText);
+                this.dfService.sendTextQueryToApiAi(sessionIds, handleApiAiResponse, senderID, messageText);
             } else if (messageAttachments) {
-                fbService.handleMessageAttachments(messageAttachments, senderID);
+                this.fbService.handleMessageAttachments(messageAttachments, senderID);
             }
         
         }catch(err){
