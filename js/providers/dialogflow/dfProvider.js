@@ -17,23 +17,17 @@ import structjson from './structjson'
  * @argument {String} googleProjectId           Google ID Project for using as a key to 
  *                                              auth on DialogFlow API.
  * 
- * @argument {fbProvider Object} fbService      FbService Object to get access to Facebook 
- *                                              messenger APIs/ Declare on this lib as 
- *                                              "fbProvider" Module.
- * 
  * @argument {String} languageCode              Language Code for using on DialogFlow
  *                                              default "en-US"
  */
 
 export default class {
     
-    constructor(googleProjectId, fbService, languageCode = 'en-US'){
+    constructor(googleProjectId, languageCode = 'en-US'){
         
         this.googleProjectId = googleProjectId;
         this.languageCode = languageCode;
         this.sessionClient = new dialogflow.SessionsClient();
-
-        this.fbService = fbService ? fbService : null;
         
         this.sendTextQueryToApiAi = this.sendEventToApiAi.bind(this);
         this.sendEventToApiAi = this.sendEventToApiAi.bind(this);
@@ -54,7 +48,6 @@ export default class {
      */
     async sendTextQueryToApiAi(sessionIds, handleApiAiResponse, sender, text, params = {}) {
         const sessionPath = this.sessionClient.sessionPath(this.googleProjectId, sessionIds.get(sender));
-        this.fbService.sendTypingOn(sender);
  
         const request = {
             session: sessionPath,

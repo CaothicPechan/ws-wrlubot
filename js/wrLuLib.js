@@ -10,7 +10,7 @@ export default class {
     constructor(app, config){
         this.app = app;
         this.fbService = new fbProvider(config.fb.graphMsgURL, config.fb.pageToken, config.fb.appSecret, config.fb.verifyToken);
-        this.dfService = new dfProvider(config.googleProjectId, this.fbService);
+        this.dfService = new dfProvider(config.googleProjectId);
         this.sessionIds = new Map();
         this.webhookUri = config.webhookUri ? config.webhookUri : '/webhook/';
 
@@ -20,7 +20,7 @@ export default class {
 
     start(app, callback){
         this.fbService.setWebhook(app, (res) => {
-            this.handleResponse(res);
+            this.handleResponse(res, callback);
             callback(200);
         });        
     }
@@ -33,12 +33,12 @@ export default class {
         }
     }
 
-    handleResponse(res){
+    handleResponse(res, callback){
         try{
             switch(res.origin){
                 case 'facebook':{
                     if(res.code === 200){
-                        this.handleFbEvent(res.payload);
+                        this.handleFbEvent(res.payload, callback);
                     }
                 }
             }
@@ -47,7 +47,7 @@ export default class {
         }
     }
 
-    handleFbEvent(event) {
+    handleFbEvent(event, callback) {
         
         console.log('Handling fb event...');
 
@@ -80,24 +80,70 @@ export default class {
             var messageAttachments = message.attachments;
             var quickReply = message.quick_reply;
 
-            if (isEcho) {
-                this.fbService.handleEcho(messageId, appId, metadata);
-                return;
-            } else if (quickReply) {
-                // handleQuickReply(senderID, quickReply, messageId);
-                return;
-            }
+            this.fbService.sendTypingOn(senderID);
 
+            setTimeout(() => {
+                
+                if (isEcho) {
+                    this.fbService.handleEcho(messageId, appId, metadata);
+                    return;
+                } else if (quickReply) {
+                    // handleQuickReply(senderID, quickReply, messageId);
+                    return;
+                }
+    
+    
+                if (messageText) {
+                    this.dfService.sendTextQueryToApiAi(this.sessionIds, this.handleDfResponse, senderID, messageText);
+                    callback(200);
+                } else if (messageAttachments) {
+                    this.fbService.handleMessageAttachments(messageAttachments, senderID);
+                    callback(200);
+                }
 
-            if (messageText) {
-                this.dfService.sendTextQueryToApiAi(this.sessionIds, handleApiAiResponse, senderID, messageText);
-            } else if (messageAttachments) {
-                this.fbService.handleMessageAttachments(messageAttachments, senderID);
-            }
+            }, 300);
         
         }catch(err){
             console.log(`An error ocurred on handling facebook event; error: ${err}`);
         }
 
+    }
+
+    handleDfResponse(sender, response, callback) {
+        let responseText = response.fulfillmentText;
+      
+        let messages = response.fulfillmentMessages;
+        let action = response.action;
+        let contexts = response.outputContexts;
+        let parameters = response.parameters;
+      
+        fbService.sendTypingOff(sender);
+      
+         if (action) {
+            this.handleDfAction(sender, action, messages, contexts, parameters);
+            console.log('<--- Action -->')
+            callback(200);
+         } else if (messages) {
+           fbService.handleMessages(messages);
+           callback(200);
+        } else if (responseText == '' && !action) {
+            /**
+             * @description On this case, DialogFlow coudn't evaluate the input, showing the unsolved query.
+             */
+           console.log('Unknown query' + response.result.resolvedQuery);
+           fbService.sendTextMessage(sender, "I'm not sure what you want. Can you be more specific?");
+           callback(200);
+        } else if (responseText) {
+           fbService.sendTextMessage(sender, responseText);
+           callback(200);
+        }
+    }
+
+    handleDfAction(sender, action, messages, contexts, parameters) {
+        switch (action) {
+            default:
+                //unhandled action, just send back the text
+                fbService.handleMessages(messages, sender);
+        }
     }
 }
