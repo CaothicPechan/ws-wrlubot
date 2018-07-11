@@ -51,8 +51,10 @@ export default class {
         
         console.log('Handling fb event...');
 
+        let senderID = {};
+
         try{
-            let senderID = event.sender.id;
+            senderID = event.sender.id;
             this.setSession(senderID);
         }catch(err){
             console.log(`An error ocurred trying set session : ${err}`);
@@ -88,7 +90,7 @@ export default class {
 
 
             if (messageText) {
-                this.dfService.sendTextQueryToApiAi(sessionIds, handleApiAiResponse, senderID, messageText);
+                this.dfService.sendTextQueryToApiAi(this.sessionIds, handleApiAiResponse, senderID, messageText);
             } else if (messageAttachments) {
                 this.fbService.handleMessageAttachments(messageAttachments, senderID);
             }
