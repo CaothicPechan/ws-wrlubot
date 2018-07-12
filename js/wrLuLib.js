@@ -16,7 +16,7 @@ export default class {
 
         this.start = this.start.bind(this);
         this.setSession = this.setSession.bind(this);
-        
+
         this.handleResponse = this.handleResponse.bind(this);
         this.handleFbEvent = this.handleFbEvent.bind(this);
         this.handleDfResponse = this.handleDfResponse.bind(this);
@@ -145,6 +145,8 @@ export default class {
     }
 
     handleDfAction(sender, action, messages, contexts, parameters) {
+        console.log('Action description:');
+        console.log(action);
         switch (action) {
             default:
                 //unhandled action, just send back the text
