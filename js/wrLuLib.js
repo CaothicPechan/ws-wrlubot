@@ -123,6 +123,8 @@ export default class {
         let parameters = response.parameters;
       
         this.fbService.sendTypingOff(sender);
+        console.log("Response ---->");
+        console.log(response);
       
          if (action) {
             this.handleDfAction(sender, action, messages, contexts, parameters);
