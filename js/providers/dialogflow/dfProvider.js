@@ -29,7 +29,7 @@ export default class {
         this.languageCode = languageCode;
         this.sessionClient = new dialogflow.SessionsClient();
         
-        this.sendTextQueryToApiAi = this.sendEventToApiAi.bind(this);
+        this.sendTextQueryToApiAi = this.sendTextQueryToApiAi.bind(this);
         this.sendEventToApiAi = this.sendEventToApiAi.bind(this);
     }
 
