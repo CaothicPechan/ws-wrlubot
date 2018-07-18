@@ -49,6 +49,10 @@ export default class {
     async sendTextQueryToApiAi(sessionIds, handleApiAiResponse, sender, text, callback, params = {}) {
         const sessionPath = this.sessionClient.sessionPath(this.googleProjectId, sessionIds.get(sender));
  
+        console.log('Callback On DF service -->');
+        console.log(callback);
+        console.log(typeof(callback));
+
         const request = {
             session: sessionPath,
             queryInput: {
