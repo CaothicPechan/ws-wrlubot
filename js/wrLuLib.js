@@ -125,6 +125,9 @@ export default class {
         this.fbService.sendTypingOff(sender);
         console.log("Response ---->");
         console.log(JSON.stringify(response));
+        console.log('Callback -->');
+        console.log(callback);
+        console.log(typeof(callback));
       
          if (action) {
             this.handleDfAction(sender, action, messages, contexts, parameters);
