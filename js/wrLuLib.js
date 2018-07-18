@@ -99,7 +99,7 @@ export default class {
     
     
                 if (messageText) {
-                    this.dfService.sendTextQueryToApiAi(this.sessionIds, this.handleDfResponse, senderID, messageText);
+                    this.dfService.sendTextQueryToApiAi(this.sessionIds, this.handleDfResponse, senderID, messageText, callback);
                     callback(200);
                 } else if (messageAttachments) {
                     this.fbService.handleMessageAttachments(messageAttachments, senderID);

@@ -46,7 +46,7 @@ export default class {
      * @returns callback handleApiAiResponse()
      * 
      */
-    async sendTextQueryToApiAi(sessionIds, handleApiAiResponse, sender, text, params = {}) {
+    async sendTextQueryToApiAi(sessionIds, handleApiAiResponse, sender, text, callback, params = {}) {
         const sessionPath = this.sessionClient.sessionPath(this.googleProjectId, sessionIds.get(sender));
  
         const request = {
@@ -66,7 +66,7 @@ export default class {
         const responses = await this.sessionClient.detectIntent(request);
         const result = responses[0].queryResult;
         
-        handleApiAiResponse(sender, result);
+        handleApiAiResponse(sender, result, callback);
     }
 
     /** Send an event to DialogFlow API
