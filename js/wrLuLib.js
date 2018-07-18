@@ -99,6 +99,7 @@ export default class {
     
     
                 if (messageText) {
+                    console.log("Sending Text To DF -->");
                     this.dfService.sendTextQueryToApiAi(this.sessionIds, this.handleDfResponse, senderID, messageText, callback);
                     callback(200);
                 } else if (messageAttachments) {
