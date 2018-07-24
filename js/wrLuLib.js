@@ -134,7 +134,6 @@ export default class {
         let contexts = response.outputContexts;
         let parameters = response.parameters;
       
-        this.fbService.sendTypingOff(sender);
 
         let payload = {
             sender: sender,
@@ -147,7 +146,6 @@ export default class {
             if (action) {
                 this.response.code = 200;
                 this.response.status = 'success';
-                this.response.default = this.fbService.handleMessages;
                 payload.type = 'action';
                 payload.action = action;
     
@@ -158,13 +156,19 @@ export default class {
     
                 this.response.code = 200;
                 this.response.status = 'success';
-                this.response.default = this.fbService.handleMessages;
                 payload.type = 'messages';
     
                 console.log('<--- Messages -->')
     
                 this.fbService.handleMessages(messages,sender);
-               
+    
+            } else if (responseText) {
+                
+                this.response.code = 200;
+                this.response.status = 'success';
+                payload.type = 'responseText';
+                
+                this.fbService.sendTextMessage(sender, responseText);
             } else if (responseText == '' && !action) {
                 /**
                  * @description On this case, DialogFlow coudn't evaluate the input, showing the unsolved query.
@@ -175,21 +179,13 @@ export default class {
                 this.response.code = 500;
                 this.response.status = 'error';
                 this.response.payload = 'Unknown query' + response.result.resolvedQuery;
-    
-            } else if (responseText) {
-                
-                this.response.code = 200;
-                this.response.status = 'success';
-                this.response.default = this.fbService.sendTextMessage;
-                payload.type = 'responseText';
-                
-                this.fbService.sendTextMessage(sender, responseText);
             }
     
             this.response.payload = payload;
             console.log('<----Response---->');
             console.log(this.response);
 
+            this.fbService.handleMessages(messages, sender);
             callback(this.response);
 
         }catch(err){
@@ -208,6 +204,19 @@ export default class {
             default:
                 //unhandled action, just send back the text
                 this.fbService.handleMessages(messages, sender);
+        }
+    }
+
+    handleDefault(response){
+        try{
+            switch(response.type)
+            {
+                case 'action':{
+                    this.fbService.handleMessages(response.payload.messages, reponse.payload.sender);
+                }
+            }
+        }catch(err){
+
         }
     }
 }
