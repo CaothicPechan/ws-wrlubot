@@ -36,7 +36,7 @@ let chatbot = new wrluLib(app, constants);
 chatbot.start(app,(res) => {
 	if(res.code === 200){
 		console.log('<--confirmed-->');
-		console.log(JSON.stringify(res));
+		console.log(res);
 		if(res.payload){
 			if(res.payload.type == 'action'){
 				res.default(res.payload.messages, res.payload.sender);
