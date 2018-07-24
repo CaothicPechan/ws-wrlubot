@@ -139,11 +139,6 @@ export default class {
         let parameters = response.parameters;
       
         this.fbService.sendTypingOff(sender);
-        console.log("Response ---->");
-        console.log(JSON.stringify(response));
-        console.log('Callback -->');
-        console.log(callback);
-        console.log(typeof(callback));
 
         let payload = {
             sender: sender,
@@ -154,6 +149,8 @@ export default class {
         };
         try{
             if (action) {
+                console.log('BIND');
+                console.log(this);
                 this.response.code = 200;
                 this.response.status = 'success';
                 this.response.default = this.fbService.handleMessages;
@@ -162,6 +159,7 @@ export default class {
     
                 // this.handleDfAction(sender, action, messages, contexts, parameters);
                 console.log('<--- Action -->')
+                console.log(this.response);
                 // callback(200);
             } else if (messages) {
     
