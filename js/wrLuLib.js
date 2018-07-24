@@ -2,6 +2,7 @@
 import fbProvider from './providers/facebook/fbProvider'
 import dfProvider from './providers/dialogflow/dfProvider'
 import uuid from 'uuid'
+import { globalResponse } from './models/commonObjects'
 
 
 
@@ -12,6 +13,7 @@ export default class {
         this.fbService = new fbProvider(config.fb.graphMsgURL, config.fb.pageToken, config.fb.appSecret, config.fb.verifyToken);
         this.dfService = new dfProvider(config.googleProjectId);
         this.sessionIds = new Map();
+        this.response = globalResponse;
         this.webhookUri = config.webhookUri ? config.webhookUri : '/webhook/';
 
         this.start = this.start.bind(this);
@@ -24,10 +26,17 @@ export default class {
     }
 
     start(app, callback){
-        this.fbService.setWebhook(app, (res) => {
-            this.handleResponse(res, callback);
-            callback(200);
-        });        
+        try{
+            this.fbService.setWebhook(app, (res) => {
+                this.handleResponse(res, callback);
+                
+            });    
+        }catch(err){
+            this.response.code = 500;
+            this.response.status = 'error';
+            this.response.payload = `An error ocurred on setting fb service function: start() --- Error: ${err}`;
+            callback(this.response);
+        }    
     }
 
     setSession(senderID) {
@@ -48,7 +57,10 @@ export default class {
                 }
             }
         }catch(err){
-            console.log(err);
+            this.response.code = 500;
+            this.response.status = 'error';
+            this.response.payload = `An error ocurred on function: handleResponse() --- Error: ${err}`;
+            callback(this.response);
         }
     }
 
@@ -63,6 +75,10 @@ export default class {
             this.setSession(senderID);
         }catch(err){
             console.log(`An error ocurred trying set session : ${err}`);
+            this.response.code = 500;
+            this.response.status = 'error';
+            this.response.payload = `An error ocurred trying set session function: handleFBEvent() --- Error: ${err}`;
+            callback(this.response);
         }
         
         try{
@@ -86,6 +102,7 @@ export default class {
             var quickReply = message.quick_reply;
 
             this.fbService.sendTypingOn(senderID);
+            /** --------  */
 
             setTimeout(() => {
                 
@@ -93,7 +110,7 @@ export default class {
                     this.fbService.handleEcho(messageId, appId, metadata);
                     return;
                 } else if (quickReply) {
-                    // handleQuickReply(senderID, quickReply, messageId);
+                    // this.handleQuickReply(senderID, quickReply, messageId);
                     return;
                 }
     
@@ -101,10 +118,8 @@ export default class {
                 if (messageText) {
                     console.log("Sending Text To DF -->");
                     this.dfService.sendTextQueryToApiAi(this.sessionIds, this.handleDfResponse, senderID, messageText, callback);
-                    callback(200);
                 } else if (messageAttachments) {
                     this.fbService.handleMessageAttachments(messageAttachments, senderID);
-                    callback(200);
                 }
 
             }, 300);
@@ -129,24 +144,66 @@ export default class {
         console.log('Callback -->');
         console.log(callback);
         console.log(typeof(callback));
-      
-         if (action) {
-            this.handleDfAction(sender, action, messages, contexts, parameters);
-            console.log('<--- Action -->')
-            callback(200);
-         } else if (messages) {
-           this.fbService.handleMessages(messages);
-           callback(200);
-        } else if (responseText == '' && !action) {
-            /**
-             * @description On this case, DialogFlow coudn't evaluate the input, showing the unsolved query.
-             */
-           console.log('Unknown query' + response.result.resolvedQuery);
-           this.fbService.sendTextMessage(sender, "I'm not sure what you want. Can you be more specific?");
-           callback(200);
-        } else if (responseText) {
-           this.fbService.sendTextMessage(sender, responseText);
-           callback(200);
+
+        let payload = {
+            sender: sender,
+            messages: messages,
+            contexts: contexts,
+            params: parameters,
+            type: ''
+        };
+        try{
+            if (action) {
+                this.response.code = 200;
+                this.response.status = 'success';
+                this.response.default = this.fbService.handleMessages;
+                payload.type = 'action';
+                payload.action = action;
+    
+                // this.handleDfAction(sender, action, messages, contexts, parameters);
+                console.log('<--- Action -->')
+                // callback(200);
+            } else if (messages) {
+    
+                this.response.code = 200;
+                this.response.status = 'success';
+                this.response.default = this.fbService.handleMessages;
+                payload.type = 'messages';
+    
+                console.log('<--- Messages -->')
+    
+                this.fbService.handleMessages(messages,sender);
+               
+            } else if (responseText == '' && !action) {
+                /**
+                 * @description On this case, DialogFlow coudn't evaluate the input, showing the unsolved query.
+                 */
+                console.log('Unknown query' + response.result.resolvedQuery);
+                this.fbService.sendTextMessage(sender, "I'm not sure what you want. Can you be more specific?");
+                
+                this.response.code = 500;
+                this.response.status = 'error';
+                this.response.payload = 'Unknown query' + response.result.resolvedQuery;
+    
+            } else if (responseText) {
+                
+                this.response.code = 200;
+                this.response.status = 'success';
+                this.response.default = this.fbService.sendTextMessage;
+                payload.type = 'responseText';
+                
+                this.fbService.sendTextMessage(sender, responseText);
+            }
+    
+            this.response.payload = payload;
+            callback(this.response);
+
+        }catch(err){
+            console.log(`An error ocurred : ${err}, method: handleDfResponse`);
+            this.response.code = 500;
+            this.response.status = 'error';
+            this.response.payload = `An error ocurred function: handleDfResponse() --- Error: ${err}`;
+            callback(this.response);
         }
     }
 
