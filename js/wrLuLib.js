@@ -103,8 +103,6 @@ export default class {
 
             this.fbService.sendTypingOn(senderID);
             /** --------  */
-
-            setTimeout(() => {
                 
                 if (isEcho) {
                     this.fbService.handleEcho(messageId, appId, metadata);
@@ -120,9 +118,7 @@ export default class {
                     this.dfService.sendTextQueryToApiAi(this.sessionIds, this.handleDfResponse, senderID, messageText, callback);
                 } else if (messageAttachments) {
                     this.fbService.handleMessageAttachments(messageAttachments, senderID);
-                }
-
-            }, 300);
+                }            
         
         }catch(err){
             console.log(`An error ocurred on handling facebook event; error: ${err}`);
@@ -159,7 +155,6 @@ export default class {
     
                 // this.handleDfAction(sender, action, messages, contexts, parameters);
                 console.log('<--- Action -->')
-                console.log(this.response);
                 // callback(200);
             } else if (messages) {
     
@@ -194,6 +189,9 @@ export default class {
             }
     
             this.response.payload = payload;
+            console.log('<----Response---->');
+            console.log(this.response);
+
             callback(this.response);
 
         }catch(err){
