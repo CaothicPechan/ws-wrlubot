@@ -145,8 +145,6 @@ export default class {
         };
         try{
             if (action) {
-                console.log('BIND');
-                console.log(this);
                 this.response.code = 200;
                 this.response.status = 'success';
                 this.response.default = this.fbService.handleMessages;
