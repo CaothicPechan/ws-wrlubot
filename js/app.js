@@ -39,7 +39,7 @@ chatbot.start(app,(res) => {
 		console.log(JSON.stringify(res));
 		if(res.payload){
 			if(res.payload.type == 'action'){
-				res.payload.default(res.payload.messages, res.payload.sender);
+				res.default(res.payload.messages, res.payload.sender);
 			}
 		}
 	}
