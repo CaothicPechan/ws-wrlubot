@@ -23,6 +23,7 @@ export default class {
         this.handleFbEvent = this.handleFbEvent.bind(this);
         this.handleDfResponse = this.handleDfResponse.bind(this);
         this.handleDfAction = this.handleDfAction.bind(this);
+        this.handleDefault = this.handleDefault.bind(this);
     }
 
     start(app, callback){
@@ -213,10 +214,15 @@ export default class {
             {
                 case 'action':{
                     this.fbService.handleMessages(response.payload.messages, reponse.payload.sender);
+                    break;
                 }
             }
         }catch(err){
-
+            console.log(`An error ocurred : ${err}, method: handleDefault`);
+            // this.response.code = 500;
+            // this.response.status = 'error';
+            // this.response.payload = `An error ocurred function: handleDefault() --- Error: ${err}`;
+            // callback(this.response);
         }
     }
 }
