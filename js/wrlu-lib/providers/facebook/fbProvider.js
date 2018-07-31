@@ -136,7 +136,7 @@ export default class {
         handleMessage(message, sender){
             switch (message.message) {
                 case "text": 
-                    message.text.text.forEach((text) => {
+                    message.text.text.map( text => {
                         if (text !== '') {
                             this.sendTextMessage(sender, text);
                         }
@@ -144,7 +144,7 @@ export default class {
                     break;
                 case "quickReplies": 
                     let replies = [];
-                    message.quickReplies.quickReplies.forEach((text) => {
+                    message.quickReplies.quickReplies.map((text) => {
                         let reply =
                             {
                                 "content_type": "text",
