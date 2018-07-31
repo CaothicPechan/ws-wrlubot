@@ -324,7 +324,7 @@ export default class {
         try{
             console.log('Default actions, on hanlde --->');
             console.log(JSON.stringify(response));
-            switch(response.type)
+            switch(response.payload.type)
             {
                 case 'action':{
                     this.fbService.handleMessages(response.payload.messages, reponse.payload.sender);
