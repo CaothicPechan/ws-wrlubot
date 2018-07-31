@@ -184,6 +184,9 @@ export default class {
             let previousType ;
             let cardTypes = [];
             let timeout = 0;
+
+            console.log('MESSAGESS to handling --->');
+            console.log(messages);
             for (var i = 0; i < messages.length; i++) {
          
                 if ( previousType == "card" && (messages[i].message != "card" || i == messages.length - 1)) {
