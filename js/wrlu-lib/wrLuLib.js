@@ -323,7 +323,7 @@ export default class {
     handleDefault(response){
         try{
             console.log('Default actions, on hanlde --->');
-            console.log(response);
+            console.log(JSON.stringify(response));
             switch(response.type)
             {
                 case 'action':{
@@ -335,7 +335,8 @@ export default class {
                     break;
                 }
                 case 'echo':{
-                    this.fbService.handleEcho(response.payload.messageId, response.payload.appId, response.payload.metadata);
+                    /* PENDING */
+                    // this.fbService.handleEcho(response.payload.messageId, response.payload.appId, response.payload.metadata);
                     break;
                 }
             }
