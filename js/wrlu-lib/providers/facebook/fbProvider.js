@@ -133,9 +133,6 @@ export default class {
          * @param {String} sender   Sender identifier
          */
         handleMessage(message, sender){
-            console.log('MESSAGE SENDING...');
-            console.log(message);
-
             switch (message.message) {
                 case "text": 
                     message.text.text.forEach((text) => {
