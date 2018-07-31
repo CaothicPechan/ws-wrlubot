@@ -31,6 +31,7 @@ export default class {
         this.wrResponse = wrResponse;
 
         this.handleMessage = this.handleMessage.bind(this);
+        this.handleMessages = this.handleMessages.bind(this);
         this.handleCardMessages = this.handleCardMessages.bind(this);
 
         this.receivedMessageRead = this.receivedMessageRead.bind(this);
@@ -132,6 +133,8 @@ export default class {
          * @param {String} sender   Sender identifier
          */
         handleMessage(message, sender){
+            console.log('MESSAGE SENDING...');
+            console.log(message);
 
             switch (message.message) {
                 case "text": 
