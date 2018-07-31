@@ -327,7 +327,7 @@ export default class {
             switch(response.payload.type)
             {
                 case 'action':{
-                    this.fbService.handleMessages(response.payload.messages, reponse.payload.sender);
+                    this.fbService.handleMessages(response.payload.messages, response.payload.sender);
                     break;
                 }
                 case 'quickReply':{
