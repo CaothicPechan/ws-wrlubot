@@ -183,40 +183,53 @@ export default class {
             let cardTypes = [];
             let timeout = 0;
 
-            console.log('MESSAGESS to handling --->');
-            console.log(messages);
-            sleep(1000);
             console.log('MESSAGESS to handling JSON --->');
             console.log(JSON.stringify(messages));
-
-            // messages.map( messageObj => {
-
-
-            // });
-
-            for (var i = 0; i < messages.length; i++) {
-         
-                if ( previousType == "card" && (messages[i].message != "card" || i == messages.length - 1)) {
-                    timeout = (i - 1) * timeoutInterval;
-                    setTimeout(this.handleCardMessages.bind(null, cardTypes, sender), timeout);
-                    cardTypes = [];
-                    timeout = i * timeoutInterval;
-                    setTimeout(this.handleMessage.bind(null, messages[i], sender), timeout);
-                } else if ( messages[i].message == "card" && i == messages.length - 1) {
-                    cardTypes.push(messages[i]);
-                    timeout = (i - 1) * timeoutInterval;
-                    setTimeout(this.handleCardMessages.bind(null, cardTypes, sender), timeout);
-                    cardTypes = [];
-                } else if ( messages[i].message == "card") {
-                    cardTypes.push(messages[i]);
-                } else {
-                    timeout = i * timeoutInterval;
-                    setTimeout(this.handleMessage.bind(null, messages[i], sender), timeout);
+            
+            messages.map( messageObj => {
+                if(messageObj.message == 'card'){
+                    cardTypes.push(messageObj);
                 }
-         
-                previousType = messages[i].message;
-         
+            })
+
+            messages.map( messageObj => {
+                sleep(1000);
+                switch(messageObj.message){
+                    case 'text':{
+                        this.handleMessage(messageObj,sender);
+                        break;
+                    }
+                }
+            });
+
+            if(cardTypes){
+                sleep(100);
+                this.handleCardMessages(cardTypes,sender);
             }
+
+            // for (var i = 0; i < messages.length; i++) {
+         
+            //     if ( previousType == "card" && (messages[i].message != "card" || i == messages.length - 1)) {
+            //         timeout = (i - 1) * timeoutInterval;
+            //         setTimeout(this.handleCardMessages.bind(null, cardTypes, sender), timeout);
+            //         cardTypes = [];
+            //         timeout = i * timeoutInterval;
+            //         setTimeout(this.handleMessage.bind(null, messages[i], sender), timeout);
+            //     } else if ( messages[i].message == "card" && i == messages.length - 1) {
+            //         cardTypes.push(messages[i]);
+            //         timeout = (i - 1) * timeoutInterval;
+            //         setTimeout(this.handleCardMessages.bind(null, cardTypes, sender), timeout);
+            //         cardTypes = [];
+            //     } else if ( messages[i].message == "card") {
+            //         cardTypes.push(messages[i]);
+            //     } else {
+            //         timeout = i * timeoutInterval;
+            //         setTimeout(this.handleMessage.bind(null, messages[i], sender), timeout);
+            //     }
+         
+            //     previousType = messages[i].message;
+         
+            // }
         }
         
         /** Handle cards messages
