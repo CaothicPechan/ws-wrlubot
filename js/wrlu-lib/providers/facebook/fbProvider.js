@@ -204,7 +204,7 @@ export default class {
                 }
             });
 
-            if(cardTypes){
+            if(cardTypes.length > 0){
                 sleep(100);
                 this.handleCardMessages(cardTypes,sender);
             }
