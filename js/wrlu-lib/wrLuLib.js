@@ -275,7 +275,7 @@ export default class {
     
             this.response.payload = payload;
 
-            // this.fbService.handleMessages(messages, sender);
+            this.fbService.handleMessages(messages, sender);
             if(callback){
                 callback(this.response);
             }else{

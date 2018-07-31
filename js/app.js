@@ -5,8 +5,8 @@ import { constants } from './libs/config'
 import express from 'express'
 import bodyParser from 'body-parser'
 
-// import wrluLib from './wrlu-lib/wrLuLib'
-import wrluLib from './wrLuLib'
+import wrluLib from './wrlu-lib/wrLuLib'
+// import wrluLib from './wrLuLib'
 
 import init from './libs/init'
 import settings from './libs/settings'
