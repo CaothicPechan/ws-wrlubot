@@ -134,6 +134,8 @@ export default class {
          * @param {String} sender   Sender identifier
          */
         handleMessage(message, sender){
+            console.log('Message on send');
+            console.log(JSON.stringify(message));
             switch (message.message) {
                 case "text": 
                     message.text.text.map( text => {
