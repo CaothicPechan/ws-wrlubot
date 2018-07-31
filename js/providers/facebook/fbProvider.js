@@ -31,7 +31,6 @@ export default class {
         this.wrResponse = wrResponse;
 
         this.handleMessage = this.handleMessage.bind(this);
-        this.handleEcho = this.handleEcho.bind(this);
         this.handleCardMessages = this.handleCardMessages.bind(this);
 
         this.receivedMessageRead = this.receivedMessageRead.bind(this);
