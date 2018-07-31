@@ -184,6 +184,9 @@ export default class {
 
             console.log('MESSAGESS to handling --->');
             console.log(messages);
+            console.log('MESSAGESS to handling JSON --->');
+            console.log(JSON.stringify(messages));
+
             for (var i = 0; i < messages.length; i++) {
          
                 if ( previousType == "card" && (messages[i].message != "card" || i == messages.length - 1)) {
