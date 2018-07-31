@@ -673,6 +673,8 @@ export default class {
          * @param {*} messageData 
          */
         callSendAPI(messageData){
+            console.log('Message DATA');
+            console.log(JSON.stringify(messageData));
             request({
                 uri: this.constants.graphMsgURL,
                 qs: {
