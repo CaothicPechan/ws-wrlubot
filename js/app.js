@@ -29,7 +29,7 @@ chatbot.start(app,(res) => {
 	if(res.code === 200){
 		if(res.payload){
 			if(res.payload.type == 'action'){
-				// chatbot.handleDefault(res);
+				chatbot.handleDefault(res);
 			}
 		}
 	}

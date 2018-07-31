@@ -180,10 +180,7 @@ export default class {
          * @param {String} sender 
          */
         handleMessages(messages, sender){
-            let timeoutInterval = 1100;
-            let previousType ;
             let cardTypes = [];
-            let timeout = 0;
 
             console.log('MESSAGESS to handling JSON --->');
             console.log(JSON.stringify(messages));
