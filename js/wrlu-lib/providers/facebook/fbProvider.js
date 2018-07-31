@@ -1,6 +1,7 @@
 import request from 'request'
 import crypto from 'crypto'
 import { wrResponse } from '../../models/commonObjects';
+import { sleep } from '../../utils/utils'
 
 
 /**
@@ -184,8 +185,14 @@ export default class {
 
             console.log('MESSAGESS to handling --->');
             console.log(messages);
+            sleep(1000);
             console.log('MESSAGESS to handling JSON --->');
             console.log(JSON.stringify(messages));
+
+            // messages.map( messageObj => {
+
+
+            // });
 
             for (var i = 0; i < messages.length; i++) {
          
