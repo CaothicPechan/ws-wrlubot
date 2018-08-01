@@ -29,13 +29,11 @@ chatbot.start(app,(res) => {
 			try{
 
 				if(res.payload.type == 'action'){
-
 					chatbot.handleDefault(res);
 					let sender = chatbot.getSender();
 					console.log('Sender id catched -->');
 					console.log(sender);
 					chatbot.fbService.sendTextMessage(sender,'Hi, text message from me');
-
 				}
 
 			}catch(err){
