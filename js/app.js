@@ -34,8 +34,8 @@ chatbot.start(app,(res) => {
 					console.log('Sender id catched -->');
 					console.log(sender);
 					setTimeout(() => {
-						chatbot.fbService.sendTextMessage(sender,'Hi, text message from me');
-						console.log('Afteeeerr');
+						chatbot.fbService.sendTextMessage(sender,'Hi, i got a image for u');
+						chatbot.fbService.sendFileMessage(sender,'http://writingexercises.co.uk/images2/randomimage/hand-water.jpg','image');
 					},1100);
 					
 				}
