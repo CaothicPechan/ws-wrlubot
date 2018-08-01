@@ -25,6 +25,8 @@ let chatbot = new wrluLib(app, constants);
 
 chatbot.start(app,(res) => {
 	if(res.code === 200){
+		console.log('JSON RESPONSE ChatbotLib');
+		console.log(JSON.stringify(res));
 		if(res.payload){
 			try{
 

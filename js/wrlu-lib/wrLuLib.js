@@ -156,6 +156,7 @@ export default class {
     handleFbEvent(event, callback) {
         
         console.log('Handling fb event...');
+        console.log(JSON.stringify(event));
 
         let senderID = {};
 

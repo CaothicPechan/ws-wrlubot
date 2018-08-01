@@ -668,7 +668,7 @@ export default class {
                 }
             };
 
-            callSendAPI(messageData);
+            this.callSendAPI(messageData);
         }
 
         /** Call the Send API.
@@ -705,7 +705,9 @@ export default class {
                             recipientId);
                     }
                 } else {
-                    console.error("Failed calling Send API", response.statusCode, response.statusMessage, body.error);
+                    console.log("Failed calling Send API");
+                    console.log(JSON.stringify(response));
+                    // console.error("Failed calling Send API", response.statusCode, response.statusMessage, body.error);
                 }
             });
         }
