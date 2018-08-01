@@ -30,7 +30,7 @@ chatbot.start(app,(res) => {
 		if(res.payload){
 			if(res.payload.type == 'action'){
 				chatbot.handleDefault(res);
-				let session = chatbot.sessionIds;
+				let session = chatbot.sessionIds.get(sender);
 				console.log('Session: -->');
 				console.log(session);
 			}
