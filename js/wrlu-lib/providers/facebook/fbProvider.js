@@ -1,5 +1,6 @@
 import request from 'request'
 import crypto from 'crypto'
+import bodyParser from 'body-parser'
 import { wrResponse } from '../../models/commonObjects';
 import { sleep } from '../../utils/utils'
 
@@ -71,6 +72,11 @@ export default class {
         setWebhook(app, callback){
 
             console.log('Setting webhook...')
+
+            /** Verifying Facebook Request **/
+            app.use(bodyParser.json({
+                verify: fbService.verifyRequestSignature
+            }))
 
             app.get(this.constants.webhookUri, (req, res) => {
                 if (req.query['hub.mode'] === 'subscribe' && req.query['hub.verify_token'] === this.constants.verifyToken) {
