@@ -28,12 +28,19 @@ let chatbot = new wrluLib(app, constants);
 chatbot.start(app,(res) => {
 	if(res.code === 200){
 		if(res.payload){
-			if(res.payload.type == 'action'){
-				chatbot.handleDefault(res);
-				chatbot.getSender();
-				// let session = chatbot.sessionIds.get(sender);
-				// console.log('Session: -->');
-				// console.log(session);
+			try{
+
+				if(res.payload.type == 'action'){
+
+					chatbot.handleDefault(res);
+					let sender = chatbot.getSender();
+					console.log('Sender id catched -->');
+					console.log(sender);
+
+				}
+				
+			}catch(err){
+				console.log(`An error ocurred on chatbot process. Error: ${err}`);
 			}
 		}
 	}

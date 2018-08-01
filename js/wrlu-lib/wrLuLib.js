@@ -93,11 +93,27 @@ export default class {
         }
     }
 
+    /** Get Sender
+     * 
+     * @description Getting & validate sender for public use
+     * 
+     */
     getSender(){
-        let it = this.sessionIds.keys();
-        console.log('Keys---->');
-        console.log(typeof(it));
-        console.log(it);
+        try{
+            let it = this.sessionIds.keys();
+            let sender = it.next().value;
+            console.log('Keys---->');
+            console.log(typeof(it));
+            console.log(it);
+
+            if(this.sessionIds.has(sender)){
+                return sender;
+            }else{
+                throw 'Sorry!, Invalid sender.';
+            }
+        }catch(err){
+            console.log(`Something was wrong of getting sender. Error: ${err}`);
+        }   
     }
 
     /** Handle Response
