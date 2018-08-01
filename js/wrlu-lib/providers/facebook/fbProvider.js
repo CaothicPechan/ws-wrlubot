@@ -680,6 +680,8 @@ export default class {
         callSendAPI(messageData, attach){
             console.log('Message DATA');
             console.log(JSON.stringify(messageData));
+            let url = attach ? this.constants.graphMsAttURL : this.constants.graphMsgURL;
+            console.log('URL Request: ' + url);
             request({
                 uri: attach ? this.constants.graphMsAttURL : this.constants.graphMsgURL,
                 qs: {
