@@ -33,9 +33,10 @@ chatbot.start(app,(res) => {
 					let sender = chatbot.getSender();
 					console.log('Sender id catched -->');
 					console.log(sender);
-					setTimeout(
-						chatbot.fbService.sendTextMessage(sender,'Hi, text message from me'
-					),1100);
+					setTimeout(() => {
+						chatbot.fbService.sendTextMessage(sender,'Hi, text message from me');
+						console.log('Afteeeerr');
+					},1100);
 					
 				}
 
