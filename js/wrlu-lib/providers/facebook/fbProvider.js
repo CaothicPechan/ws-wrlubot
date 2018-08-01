@@ -75,7 +75,7 @@ export default class {
 
             /** Verifying Facebook Request **/
             app.use(bodyParser.json({
-                verify: fbService.verifyRequestSignature
+                verify: this.verifyRequestSignature
             }))
 
             app.get(this.constants.webhookUri, (req, res) => {
@@ -129,6 +129,7 @@ export default class {
                     res.sendStatus(200);
                 }
             });
+
         }
     
     /** Handle methods **
