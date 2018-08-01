@@ -8,7 +8,7 @@ export const constants =
         verifyToken: 'pechanbot',
         appID: '2135975886726818',
         appSecret: '47f848974f91e853d50367d9bece06ee',
-        graphMsgURL: 'https://graph.facebook.com/v2.6/me/messages'
+        graphMsgURL: 'https://graph.facebook.com/v2.6/me/'
     },
     googleProjectId:'my-project-1496089993138',
     apiAiClientAccessToken: '',

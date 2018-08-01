@@ -24,7 +24,8 @@ export default class {
 
     constructor(graphMsgURL, pageToken, appSecret, verifyToken, webhookUri = '/webhook/'){
         this.constants = {};
-        this.constants.graphMsgURL = graphMsgURL;
+        this.constants.graphMsgURL = `${graphMsgURL}messages`
+        this.constants.graphMsAttURL = `${graphMsgURL}message_attachments`
         this.constants.pageToken = pageToken;
         this.constants.appSecret = appSecret;
         this.constants.verifyToken = verifyToken;
@@ -533,7 +534,7 @@ export default class {
                     }
                 }
             };
-            this.callSendAPI(messageData);
+            this.callSendAPI(messageData,true);
         }
 
        
@@ -676,11 +677,11 @@ export default class {
          * 
          * @param {*} messageData 
          */
-        callSendAPI(messageData){
+        callSendAPI(messageData, attach){
             console.log('Message DATA');
             console.log(JSON.stringify(messageData));
             request({
-                uri: this.constants.graphMsgURL,
+                uri: attach ? this.constants.graphMsAttURL : this.constants.graphMsgURL,
                 qs: {
                     access_token: this.constants.pageToken
                 },
