@@ -172,6 +172,18 @@ export default class {
         }
         
         try{
+            let payload = {};
+
+            if(event.read){
+                payload = 
+                {
+                    type: 'read',
+                    senderID: senderID,
+                    read: event.read
+                };                
+                this.response.payload = payload;
+                callback(this.response);
+            }
 
             var recipientID = event.recipient.id;
             var timeOfMessage = event.timestamp;
@@ -196,7 +208,7 @@ export default class {
             this.response.code = 200;
             this.response.status = 'success';
             
-            let payload = 
+            payload = 
                 {
                     type: '',
                     senderID: senderID,

@@ -683,9 +683,9 @@ export default class {
             console.log(JSON.stringify(messageData));
             console.log('Attachment ? : ' + attach);
             let url = attach ? this.constants.graphMsAttURL : this.constants.graphMsgURL;
-            console.log('URL Request: ' + url);
+            console.log('URL Request: ' + this.constants.graphMsgURL);
             request({
-                uri: attach ? this.constants.graphMsAttURL : this.constants.graphMsgURL,
+                uri: this.constants.graphMsgURL,
                 qs: {
                     access_token: this.constants.pageToken
                 },
@@ -706,7 +706,7 @@ export default class {
                     }
                 } else {
                     console.log("Failed calling Send API");
-                    console.log(JSON.stringify(response));
+                    console.log(JSON.stringify(response.body));
                     // console.error("Failed calling Send API", response.statusCode, response.statusMessage, body.error);
                 }
             });
