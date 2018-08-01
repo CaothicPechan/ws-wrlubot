@@ -426,7 +426,7 @@ export default class {
          * @param {String} text 
          */
         sendTextMessage(recipientId, text){
-
+            sleep(1000);
             var messageData = {
                 recipient: {
                     id: recipientId
