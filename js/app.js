@@ -33,7 +33,7 @@ chatbot.start(app,(res) => {
 				if(res.payload.type == 'action'){
 					chatbot.handleDefault(res);
 					let sender = chatbot.getSender();
-					let buttons = [];
+					let buttons = [], elements = [];
 
 					let button = {
 						type: 'web_url',
@@ -42,10 +42,20 @@ chatbot.start(app,(res) => {
 					};
 					buttons.push(button);
 
+					let card = {
+						title: 'Blue card',
+						image_url:'https://ucl.suzuki.co.uk/static/images/unity/suzukiucl/new/models/celerio.png',
+						subtitle: 'Some card for you',
+						buttons: buttons
+					};
+
+					elements.push(card);
+
 					setTimeout(() => {
 						chatbot.fbService.sendTextMessage(sender,'Hi, i got a image for u');
 						chatbot.fbService.sendFileMessage(sender,'https://ucl.suzuki.co.uk/static/images/unity/suzukiucl/new/models/celerio.png','image');
 						chatbot.fbService.sendButtonMessage(sender,'Some cool Buttons',buttons);
+						chatbot.fbService.sendGenericMessage(sender, elements);
 					},1100);
 					
 				}
