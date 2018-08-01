@@ -176,6 +176,7 @@ export default class {
         
         try{
             let payload = {};
+            
 
             if(event.read){
                 payload = 
@@ -207,8 +208,6 @@ export default class {
             var messageAttachments = message.attachments;
             var quickReply = message.quick_reply;
 
-            this.fbService.sendTypingOn(senderID);
-
             this.response.code = 200;
             this.response.status = 'success';
             
@@ -228,6 +227,8 @@ export default class {
                 // this.fbService.handleEcho(messageId, appId, metadata);
                 return;
             } else if (quickReply) {
+                this.fbService.sendTypingOn(senderID);
+
                 payload.type = 'quickReply';
                 payload.quickReply = quickReply;
                 this.response.payload = payload;
@@ -236,7 +237,8 @@ export default class {
                 return;
             }
 
-
+            this.fbService.sendTypingOn(senderID);
+            
             if (messageText) {
                 this.dfService.sendTextQueryToApiAi(this.sessionIds, this.handleDfResponse, senderID, messageText, callback);
             } else if (messageAttachments) {
