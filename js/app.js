@@ -3,7 +3,6 @@
 
 import { constants } from './libs/config'
 import express from 'express'
-import bodyParser from 'body-parser'
 
 import wrluLib from './wrlu-lib/wrLuLib'
 
