@@ -76,6 +76,7 @@ export default class {
             this.response.status = 'error';
             this.response.payload = `An error ocurred on setting fb service function: start() --- Error: ${err}`;
             callback(this.response);
+            return;
         }    
     }
 
@@ -141,6 +142,7 @@ export default class {
             this.response.status = 'error';
             this.response.payload = `An error ocurred on function: handleResponse() --- Error: ${err}`;
             callback(this.response);
+            return;
         }
     }
 
@@ -169,6 +171,7 @@ export default class {
             this.response.status = 'error';
             this.response.payload = `An error ocurred trying set session function: handleFBEvent() --- Error: ${err}`;
             callback(this.response);
+            return;
         }
         
         try{
@@ -183,6 +186,7 @@ export default class {
                 };                
                 this.response.payload = payload;
                 callback(this.response);
+                return;
             }
 
             var recipientID = event.recipient.id;
@@ -240,6 +244,7 @@ export default class {
                 payload.attachments = messageAttachments;
                 this.response.payload = payload;
                 callback(this.response);
+                return;
             }            
         
         }catch(err){
@@ -314,6 +319,7 @@ export default class {
             // this.fbService.handleMessages(messages, sender);
             if(callback){
                 callback(this.response);
+                return;
             }else{
                 return;
             }
@@ -325,6 +331,7 @@ export default class {
             this.response.payload = `An error ocurred function: handleDfResponse() --- Error: ${err}`;
             if(callback){
                 callback(this.response);
+                return;
             }else{
                 return;
             }
@@ -371,6 +378,7 @@ export default class {
                     break;
                 }
                 case 'echo':{
+                    console.log('Echo recieved');
                     /* PENDING */
                     // this.fbService.handleEcho(response.payload.messageId, response.payload.appId, response.payload.metadata);
                     break;
