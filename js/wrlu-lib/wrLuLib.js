@@ -93,6 +93,13 @@ export default class {
         }
     }
 
+    getSender(){
+        let it = this.sessionIds.keys();
+        console.log('Keys---->');
+        console.log(typeof(it));
+        console.log(it);
+    }
+
     /** Handle Response
      * 
      * @param {*} res 
