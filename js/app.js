@@ -37,7 +37,7 @@ chatbot.start(app,(res) => {
 					console.log(sender);
 					setTimeout(() => {
 						chatbot.fbService.sendTextMessage(sender,'Hi, i got a image for u');
-						chatbot.fbService.sendFileMessage(sender,'http://writingexercises.co.uk/images2/randomimage/hand-water.jpg','image');
+						chatbot.fbService.sendFileMessage(sender,'https://ucl.suzuki.co.uk/static/images/unity/suzukiucl/new/models/celerio.png','image');
 					},1100);
 					
 				}
