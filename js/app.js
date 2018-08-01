@@ -33,11 +33,19 @@ chatbot.start(app,(res) => {
 				if(res.payload.type == 'action'){
 					chatbot.handleDefault(res);
 					let sender = chatbot.getSender();
-					console.log('Sender id catched -->');
-					console.log(sender);
+					let buttons = [];
+
+					let button = {
+						type: 'web_url',
+						title: 'See something great!',
+						url: 'https://s3-eu-west-1.amazonaws.com/barkibu-blog/blog+images/diarrea-en-cachorros-recien-nacidos-causas-y-tratamiento/diarreacachorros2.jpg?'
+					};
+					buttons.push(button);
+
 					setTimeout(() => {
 						chatbot.fbService.sendTextMessage(sender,'Hi, i got a image for u');
 						chatbot.fbService.sendFileMessage(sender,'https://ucl.suzuki.co.uk/static/images/unity/suzukiucl/new/models/celerio.png','image');
+						chatbot.fbService.sendButtonMessage(sender,'Some cool Buttons',buttons);
 					},1100);
 					
 				}
