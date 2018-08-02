@@ -201,12 +201,15 @@ export default class {
 
             messages.map( messageObj => {
                 sleep(1000);
-                switch(messageObj.message){
-                    case 'text':{
-                        this.handleMessage(messageObj,sender);
-                        break;
-                    }
+                if(messageObj.message != 'card'){
+                    this.handleMessage(messageObj,sender);
                 }
+                // switch(messageObj.message){
+                //     case 'text':{
+                //         this.handleMessage(messageObj,sender);
+                //         break;
+                //     }
+                // }
             });
 
             if(cardTypes.length > 0){
