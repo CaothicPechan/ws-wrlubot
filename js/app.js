@@ -52,10 +52,10 @@ chatbot.start(app,(res) => {
 					elements.push(card);
 
 					setTimeout(() => {
-						chatbot.fbService.sendTextMessage(sender,'Hi, i got a image for u');
-						chatbot.fbService.sendFileMessage(sender,'https://ucl.suzuki.co.uk/static/images/unity/suzukiucl/new/models/celerio.png','image');
-						chatbot.fbService.sendButtonMessage(sender,'Some cool Buttons',buttons);
-						chatbot.fbService.sendGenericMessage(sender, elements);
+						// chatbot.fbService.sendTextMessage(sender,'Hi, i got a image for u');
+						// chatbot.fbService.sendFileMessage(sender,'https://ucl.suzuki.co.uk/static/images/unity/suzukiucl/new/models/celerio.png','image');
+						// chatbot.fbService.sendButtonMessage(sender,'Some cool Buttons',buttons);
+						// chatbot.fbService.sendGenericMessage(sender, elements);
 					},1100);
 					
 				}
