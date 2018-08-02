@@ -377,8 +377,10 @@ export default class {
                 }
                 case 'messages':{
                     this.fbService.handleMessages(response.payload.messages, response.payload.sender);
-                    // this.dfService.sendTextQueryToApiAi(this.sessionIds, this.handleDfResponse, response.payload.senderID, response.payload.quickReply.payload);
                     break;
+                }
+                case 'quickReply':{
+                    this.dfService.sendTextQueryToApiAi(this.sessionIds, this.handleDfResponse, response.payload.senderID, response.payload.quickReply.payload);
                 }
                 case 'echo':{
                     console.log('Echo recieved');
