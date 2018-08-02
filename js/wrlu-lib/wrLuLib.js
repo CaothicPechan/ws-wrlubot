@@ -375,7 +375,7 @@ export default class {
                     this.fbService.handleMessages(response.payload.messages, response.payload.sender);
                     break;
                 }
-                case 'quickReply':{
+                case 'messages':{
                     this.fbService.handleMessages(response.payload.messages, response.payload.sender);
                     // this.dfService.sendTextQueryToApiAi(this.sessionIds, this.handleDfResponse, response.payload.senderID, response.payload.quickReply.payload);
                     break;
