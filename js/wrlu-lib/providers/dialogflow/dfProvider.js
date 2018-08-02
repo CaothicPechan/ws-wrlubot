@@ -70,7 +70,11 @@ export default class {
         console.log('Response from DF V2 Api -->');
         console.log(JSON.stringify(result));
 
-        handleApiAiResponse(sender, result, callback);
+        if(callback){
+            handleApiAiResponse(sender, result, callback);
+        }else{
+            return handleApiAiResponse(sender, result);
+        }
     }
 
     /** Send an event to DialogFlow API

@@ -384,7 +384,8 @@ export default class {
                     break;
                 }
                 case 'quickReply':{
-                    this.dfService.sendTextQueryToApiAi(this.sessionIds, this.handleDfResponse, response.payload.senderID, response.payload.quickReply.payload);
+                    return this.dfService.sendTextQueryToApiAi(this.sessionIds, this.handleDfResponse, response.payload.senderID, response.payload.quickReply.payload);
+                    break;
                 }
                 case 'echo':{
                     console.log('Echo recieved');
