@@ -67,6 +67,9 @@ export default class {
         const responses = await this.sessionClient.detectIntent(request);
         const result = responses[0].queryResult;
         
+        console.log('Response from DF V2 Api -->');
+        console.log(JSON.stringify(result));
+
         handleApiAiResponse(sender, result, callback);
     }
 
