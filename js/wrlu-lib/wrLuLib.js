@@ -280,7 +280,8 @@ export default class {
             type: ''
         };
 
-        //PENDING
+        console.log('Handling DF Response -->');
+        console.log(JSON.stringify(response));
 
         try{
             if (action) {
@@ -318,11 +319,14 @@ export default class {
     
             this.response.payload = payload;
 
+            console.log('Callback?');
+            console.log(callback);
             // this.fbService.handleMessages(messages, sender);
             if(callback){
                 callback(this.response);
                 return;
             }else{
+                console.log('Callback undefined');
                 return this.response;
             }
 
