@@ -34,8 +34,10 @@ chatbot.start(app,(res) => {
 					let defaultres = chatbot.handleDefault(res);
 					let sender = chatbot.getSender();
 					let buttons = [], elements = [];
+					setTimeout(() => {
 					console.log('Default Res----->');
 					console.log(defaultres);
+					}, 4000);
 
 					let button = {
 						type: 'web_url',
