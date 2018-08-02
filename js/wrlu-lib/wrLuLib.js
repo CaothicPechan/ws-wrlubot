@@ -323,7 +323,7 @@ export default class {
                 callback(this.response);
                 return;
             }else{
-                return;
+                return this.response;
             }
 
         }catch(err){

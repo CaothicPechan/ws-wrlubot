@@ -31,9 +31,11 @@ chatbot.start(app,(res) => {
 			try{
 
 				if(res.payload.type == 'action' || res.payload.type == 'messages' || res.payload.type == 'quickReply'){
-					chatbot.handleDefault(res);
+					let defaultres = chatbot.handleDefault(res);
 					let sender = chatbot.getSender();
 					let buttons = [], elements = [];
+					console.log('Default Res----->');
+					console.log(defaultres);
 
 					let button = {
 						type: 'web_url',
