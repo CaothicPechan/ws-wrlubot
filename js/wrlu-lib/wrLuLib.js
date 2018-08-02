@@ -238,7 +238,7 @@ export default class {
             }
 
             this.fbService.sendTypingOn(senderID);
-            
+
             if (messageText) {
                 this.dfService.sendTextQueryToApiAi(this.sessionIds, this.handleDfResponse, senderID, messageText, callback);
             } else if (messageAttachments) {
@@ -376,7 +376,8 @@ export default class {
                     break;
                 }
                 case 'quickReply':{
-                    this.dfService.sendTextQueryToApiAi(this.sessionIds, this.handleDfResponse, response.payload.senderID, response.payload.quickReply.payload);
+                    this.fbService.handleMessages(response.payload.messages, response.payload.sender);
+                    // this.dfService.sendTextQueryToApiAi(this.sessionIds, this.handleDfResponse, response.payload.senderID, response.payload.quickReply.payload);
                     break;
                 }
                 case 'echo':{
