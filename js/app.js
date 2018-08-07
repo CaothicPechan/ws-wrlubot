@@ -36,6 +36,8 @@ chatbot.start(app,(res) => {
 					let buttons = [], elements = [];
 					setTimeout(() => {
 						if(defaultres){
+							console.log('Default res');
+							console.log(defaultres);
 							chatbot.handleDefault(defaultres);
 						}
 					}, 4000);
