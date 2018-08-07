@@ -36,10 +36,11 @@ chatbot.start(app,(res) => {
 					let buttons = [], elements = [];
 
 					if(defaultres){
-						defaultres.then(() => {
+						defaultres.then((x) => {
 							console.log('Default res');
-							console.log(defaultres);
+							console.log(JSON.stringify(defaultres));
 							console.log('Promise resolved');
+							console.log(JSON.stringify(x));
 							chatbot.handleDefault(defaultres);
 						});
 					}
