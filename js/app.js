@@ -31,19 +31,23 @@ chatbot.start(app,(res) => {
 			try{
 
 				if(res.payload.type == 'action' || res.payload.type == 'messages' || res.payload.type == 'quickReply'){
-					let defaultres = chatbot.handleDefault(res);
+					// let defaultres = chatbot.handleDefault(res);
 					let sender = chatbot.getSender();
 					let buttons = [], elements = [];
 
-					if(defaultres){
-						defaultres.then((x) => {
-							console.log('Default res');
-							console.log(JSON.stringify(defaultres));
-							console.log('Promise resolved');
-							console.log(JSON.stringify(x));
-							chatbot.handleDefault(x);
-						});
-					}
+					chatbot.handleDefault(res).then((dres) => {
+						chatbot.handleDefault(dres);
+					});
+
+					// if(defaultres){
+					// 	defaultres.then((x) => {
+					// 		console.log('Default res');
+					// 		console.log(JSON.stringify(defaultres));
+					// 		console.log('Promise resolved');
+					// 		console.log(JSON.stringify(x));
+					// 		chatbot.handleDefault(x);
+					// 	});
+					// }
 
 					let button = {
 						type: 'web_url',
