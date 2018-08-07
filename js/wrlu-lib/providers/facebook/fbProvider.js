@@ -143,7 +143,7 @@ export default class {
          */
         handleMessage(message, sender){
             console.log('Message on send');
-            console.log(JSON.stringify(message));
+            // console.log(JSON.stringify(message));
             switch (message.message) {
                 case "text": 
                     message.text.text.map( text => {
@@ -168,17 +168,17 @@ export default class {
                 case "image":
                     this.sendFileMessage(sender, message.image.imageUri, 'image');
                     break;
+                case "video":
+                    this.sendFileMessage(sender, message.image.imageUri, 'video');
+                    break;
+                case "audio":
+                    this.sendFileMessage(sender, message.image.imageUri, 'audio');
+                    break;
+                case "file":
+                    this.sendFileMessage(sender, message.image.imageUri, 'file');
+                    break;
                 default:
                     console.log(`Can't handle message response, message: ${message}`);
-                // case "video":
-                //     this.sendFileMessage(sender, message.image.imageUri, 'video');
-                //     break;
-                // case "audio":
-                //     this.sendFileMessage(sender, message.image.imageUri, 'audio');
-                //     break;
-                // case "file":
-                //     this.sendFileMessage(sender, message.image.imageUri, 'file');
-                //     break;
             }
         }
 
@@ -189,9 +189,6 @@ export default class {
          */
         handleMessages(messages, sender){
             let cardTypes = [];
-
-            console.log('MESSAGESS to handling JSON --->');
-            console.log(JSON.stringify(messages));
             
             messages.map( messageObj => {
                 if(messageObj.message == 'card'){
@@ -682,11 +679,9 @@ export default class {
          * @param {*} messageData 
          */
         callSendAPI(messageData, attach = false){
-            console.log('Message DATA');
-            console.log(JSON.stringify(messageData));
-            console.log('Attachment ? : ' + attach);
+
             let url = attach ? this.constants.graphMsAttURL : this.constants.graphMsgURL;
-            console.log('URL Request: ' + this.constants.graphMsgURL);
+
             request({
                 uri: this.constants.graphMsgURL,
                 qs: {

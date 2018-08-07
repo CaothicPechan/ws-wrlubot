@@ -103,9 +103,6 @@ export default class {
         try{
             let it = this.sessionIds.keys();
             let sender = it.next().value;
-            console.log('Keys---->');
-            console.log(typeof(it));
-            console.log(it);
 
             if(this.sessionIds.has(sender)){
                 return sender;
@@ -158,7 +155,7 @@ export default class {
     handleFbEvent(event, callback) {
         
         console.log('Handling fb event...');
-        console.log(JSON.stringify(event));
+        // console.log(JSON.stringify(event));
 
         let senderID = {};
 
@@ -281,7 +278,7 @@ export default class {
         };
 
         console.log('Handling DF Response -->');
-        console.log(JSON.stringify(response));
+        // console.log(JSON.stringify(response));
 
         try{
             if (action) {
@@ -319,8 +316,6 @@ export default class {
     
             this.response.payload = payload;
 
-            console.log('Callback?');
-            console.log(callback);
             // this.fbService.handleMessages(messages, sender);
             if(callback){
                 callback(this.response);
@@ -355,8 +350,7 @@ export default class {
      * 
      */
     handleDfAction(sender, action, messages, contexts, parameters) {
-        console.log('Action description:');
-        console.log(action);
+
         switch (action) {
             default:
                 //unhandled action, just send back the text
@@ -371,8 +365,8 @@ export default class {
      */
     handleDefault(response){
         try{
-            console.log('Default actions, on hanlde --->');
-            console.log(JSON.stringify(response));
+            // console.log('Default actions, on hanlde --->');
+            // console.log(JSON.stringify(response));
             switch(response.payload.type)
             {
                 case 'action':{

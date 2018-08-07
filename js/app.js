@@ -35,8 +35,9 @@ chatbot.start(app,(res) => {
 					let sender = chatbot.getSender();
 					let buttons = [], elements = [];
 					setTimeout(() => {
-					console.log('Default Res----->');
-					console.log(defaultres);
+						if(defaultres){
+							chatbot.handleDefault(defaultres);
+						}
 					}, 4000);
 
 					let button = {
