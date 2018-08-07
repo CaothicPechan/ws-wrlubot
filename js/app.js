@@ -34,13 +34,15 @@ chatbot.start(app,(res) => {
 					let defaultres = chatbot.handleDefault(res);
 					let sender = chatbot.getSender();
 					let buttons = [], elements = [];
-					setTimeout(() => {
-						if(defaultres){
+
+					if(defaultres){
+						defaultres.then(() => {
 							console.log('Default res');
 							console.log(defaultres);
+							console.log('Promise resolved');
 							chatbot.handleDefault(defaultres);
-						}
-					}, 4000);
+						});
+					}
 
 					let button = {
 						type: 'web_url',
@@ -58,12 +60,12 @@ chatbot.start(app,(res) => {
 
 					elements.push(card);
 
-					setTimeout(() => {
-						// chatbot.fbService.sendTextMessage(sender,'Hi, i got a image for u');
-						// chatbot.fbService.sendFileMessage(sender,'https://ucl.suzuki.co.uk/static/images/unity/suzukiucl/new/models/celerio.png','image');
-						// chatbot.fbService.sendButtonMessage(sender,'Some cool Buttons',buttons);
-						// chatbot.fbService.sendGenericMessage(sender, elements);
-					},100);
+					// setTimeout(() => {
+					// 	// chatbot.fbService.sendTextMessage(sender,'Hi, i got a image for u');
+					// 	// chatbot.fbService.sendFileMessage(sender,'https://ucl.suzuki.co.uk/static/images/unity/suzukiucl/new/models/celerio.png','image');
+					// 	// chatbot.fbService.sendButtonMessage(sender,'Some cool Buttons',buttons);
+					// 	// chatbot.fbService.sendGenericMessage(sender, elements);
+					// },100);
 					
 				}
 
