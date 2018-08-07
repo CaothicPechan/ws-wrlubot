@@ -389,7 +389,8 @@ export default class {
                 }
             }
         }catch(err){
-            console.log(`An error ocurred : ${err}, method: handleDefault`);
+            console.log(`An error ocurred : ${err}, method: handleDefault. Response: `);
+            console.log(JSON.stringify(response));
             // this.response.code = 500;
             // this.response.status = 'error';
             // this.response.payload = `An error ocurred function: handleDefault() --- Error: ${err}`;
