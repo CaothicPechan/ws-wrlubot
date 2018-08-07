@@ -41,7 +41,7 @@ chatbot.start(app,(res) => {
 							console.log(JSON.stringify(defaultres));
 							console.log('Promise resolved');
 							console.log(JSON.stringify(x));
-							chatbot.handleDefault(defaultres);
+							chatbot.handleDefault(x);
 						});
 					}
 
