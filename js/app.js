@@ -36,7 +36,9 @@ chatbot.start(app,(res) => {
 					let buttons = [], elements = [];
 
 					chatbot.handleDefault(res).then((dres) => {
-						chatbot.handleDefault(dres);
+						if(dres){
+							chatbot.handleDefault(dres);
+						}
 					});
 
 					// if(defaultres){
