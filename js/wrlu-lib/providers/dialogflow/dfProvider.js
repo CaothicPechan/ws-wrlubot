@@ -23,11 +23,22 @@ import structjson from './structjson'
 
 export default class {
     
-    constructor(googleProjectId, languageCode = 'en-US'){
+    constructor(googleProjectId, clientEmail, privateKey,  languageCode = 'en-US'){
         
+        
+        let credentials = {
+            client_email: clientEmail,
+            private_key: privateKey
+        };
+
         this.googleProjectId = googleProjectId;
+        this.clientEmail = clientEmail;
+        this.privateKey = privateKey;
         this.languageCode = languageCode;
-        this.sessionClient = new dialogflow.SessionsClient();
+        this.sessionClient = new dialogflow.SessionsClient({
+            projectId: googleProjectId,
+            credentials
+        });
         
         this.sendTextQueryToApiAi = this.sendTextQueryToApiAi.bind(this);
         this.sendEventToApiAi = this.sendEventToApiAi.bind(this);

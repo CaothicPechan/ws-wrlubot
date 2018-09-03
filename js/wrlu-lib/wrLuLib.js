@@ -36,7 +36,12 @@ import { globalResponse } from './models/commonObjects'
  *                                  appSecret: '',
  *                                  graphMsgURL: 'https://graph.facebook.com/v2.6/me/messages'
  *                              },
- *                              googleProjectId:''
+ *                              gcp:{
+ *                                  projectId: '',
+ *                                  clientEmail: '',
+ *                                  privateKey: '',
+ *                              }
+ *                              webhookUri:''
  *                          }
  *                        
  */
@@ -45,7 +50,7 @@ export default class {
     constructor(app, config){
         this.app = app;
         this.fbService = new fbProvider(config.fb.graphMsgURL, config.fb.pageToken, config.fb.appSecret, config.fb.verifyToken);
-        this.dfService = new dfProvider(config.googleProjectId);
+        this.dfService = new dfProvider(config.gcp.projectId, config.gcp.clientEmail, config.gcp.privateKey);
         this.sessionIds = new Map();
         this.response = globalResponse;
         this.webhookUri = config.webhookUri ? config.webhookUri : '/webhook/';
