@@ -40,6 +40,7 @@ import { globalResponse } from './models/commonObjects'
  *                                  projectId: '',
  *                                  clientEmail: '',
  *                                  privateKey: '',
+ *                                  languageCode: ''
  *                              }
  *                              webhookUri:''
  *                          }
@@ -50,7 +51,7 @@ export default class {
     constructor(app, config){
         this.app = app;
         this.fbService = new fbProvider(config.fb.graphMsgURL, config.fb.pageToken, config.fb.appSecret, config.fb.verifyToken);
-        this.dfService = new dfProvider(config.gcp.projectId, config.gcp.clientEmail, config.gcp.privateKey);
+        this.dfService = new dfProvider(config.gcp.projectId, config.gcp.clientEmail, config.gcp.privateKey, config.gcp.languageCode);
         this.sessionIds = new Map();
         this.response = globalResponse;
         this.webhookUri = config.webhookUri ? config.webhookUri : '/webhook/';
