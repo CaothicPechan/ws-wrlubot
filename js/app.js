@@ -27,14 +27,23 @@ chatbot.start(app,(res) => {
 	if(res.code === 200){
 		console.log('JSON RESPONSE ChatbotLib');
 		console.log(JSON.stringify(res));
+		
 		if(res.payload){
 			try{
-
-				if(res.payload.type == 'action' || res.payload.type == 'messages' || res.payload.type == 'quickReply'){
+				let data = res.payload;
+				if(data.type == 'action' || data.type == 'messages' || data.type == 'quickReply'){
 					// let defaultres = chatbot.handleDefault(res);
 					let sender = chatbot.getSender();
 					let buttons = [], elements = [];
 
+					if(data.type == 'action'){
+						switch(data.action){
+							case 'order.status':{
+								chatbot.fbService.sendTextMessage(sender,'Tu orden se encuentra en camino, con el número de orden puedes darle seguimiento :)');
+								break;
+							}
+						}
+					}
 					chatbot.handleDefault(res).then((dres) => {
 						if(dres){
 							chatbot.handleDefault(dres);
