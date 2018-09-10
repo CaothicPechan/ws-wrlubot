@@ -39,7 +39,10 @@ chatbot.start(app,(res) => {
 					if(data.type == 'action'){
 						switch(data.action){
 							case 'order.status':{
-								chatbot.fbService.sendTextMessage(sender,'Tu orden se encuentra en camino, con el número de orden puedes darle seguimiento :)');
+								setTimeout( () => 
+									{
+										chatbot.fbService.sendTextMessage(sender,'Tu orden se encuentra en camino, con el número de orden puedes darle seguimiento :)');
+									}, 3000);
 								break;
 							}
 						}
