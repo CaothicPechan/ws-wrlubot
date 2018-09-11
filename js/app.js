@@ -25,8 +25,7 @@ let chatbot = new wrluLib(app, constants);
 
 chatbot.start(app,(res) => {
 	if(res.code === 200){
-		console.log('JSON RESPONSE ChatbotLib');
-		console.log(JSON.stringify(res));
+		console.log(`JSON RESPONSE ChatbotLib: \n ${JSON.stringify(res)}`);
 		
 		if(res.payload){
 			try{
@@ -39,8 +38,8 @@ chatbot.start(app,(res) => {
 					if(data.type == 'action'){
 						switch(data.action){
 							case 'order.status':{
-								console.log('Parametro de Orden: ');
-								console.log(data.params.fields.orderId[data.params.fields.orderId.kind]);
+								// console.log('Parametro de Orden: ');
+								// console.log(data.params.fields.orderId[data.params.fields.orderId.kind]);
 								if(data.params.fields.orderId[data.params.fields.orderId.kind]){
 									setTimeout( () => 
 									{
