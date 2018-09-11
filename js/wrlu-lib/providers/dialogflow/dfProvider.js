@@ -17,6 +17,12 @@ import structjson from './structjson'
  * @argument {String} googleProjectId           Google ID Project for using as a key to 
  *                                              auth on DialogFlow API.
  * 
+ * @argument {String} clientEmail               Email using on google cloud (service account)
+ *                          |                   for setting dialogflow project
+ * 
+ * @argument {String} privateKey                Private key from google credentials for the
+ *                                              DialogFlow project
+ * 
  * @argument {String} languageCode              Language Code for using on DialogFlow
  *                                              default "en-US"
  */
@@ -47,7 +53,8 @@ export default class {
     /** Send a text query to DialogFlow API
      * 
      * 
-     * @method sendTextQueryToApiAi()           
+     * @method sendTextQueryToApiAi()          
+     *  
      * @param {String} sessionIds               Ids for actual session for send to API
      * @param {Function} handleApiAiResponse    CallBack for handle response
      * @param {*} sender                        Sender identifier
@@ -77,9 +84,6 @@ export default class {
         };
         const responses = await this.sessionClient.detectIntent(request);
         const result = responses[0].queryResult;
-        
-        // console.log('Response from DF V2 Api -->');
-        // console.log(JSON.stringify(result));
 
         if(callback){
             handleApiAiResponse(sender, result, callback);
@@ -92,6 +96,7 @@ export default class {
      * 
      * 
      * @method sendEventToApiAi()
+     * 
      * @param {String} sessionIds                   Ids for actual session for send to API
      * @param {Function} handleApiAiResponse        CallBack for handle response
      * @param {*} sender                            Sender identifier

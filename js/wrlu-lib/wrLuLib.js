@@ -160,8 +160,8 @@ export default class {
      */
     handleFbEvent(event, callback) {
         
-        console.log('Handling fb event...');
-        // console.log(JSON.stringify(event));
+        console.log('Handling FB event, event:');
+        console.log(JSON.stringify(event));
 
         let senderID = {};
 
@@ -182,8 +182,7 @@ export default class {
             
 
             if(event.read){
-                payload = 
-                {
+                payload = {
                     type: 'read',
                     senderID: senderID,
                     read: event.read
@@ -197,46 +196,57 @@ export default class {
             var timeOfMessage = event.timestamp;
             var message = event.message;
 
-            var isEcho = message.is_echo;
-            var messageId = message.mid;
-            var appId = message.app_id;
-            var metadata = message.metadata;
-
-            /**
-             * 
-             * @description You can get text or attachments, not both
-             */
-
-            var messageText = message.text;
-            var messageAttachments = message.attachments;
-            var quickReply = message.quick_reply;
-
-            this.response.code = 200;
-            this.response.status = 'success';
+            var isEcho = "";
+            var messageId = "";
+            var appId = "";
+            var metadata = "";
             
-            payload = 
-                {
+            var messageText = "";
+            var messageAttachments = "";
+            var quickReply = "";
+            
+
+            if(message){
+
+                isEcho = message.is_echo;
+                messageId = message.mid;
+                appId = message.app_id;
+                metadata = message.metadata;
+
+
+                /**
+                 * 
+                 * @description You can get text or attachments, not both
+                 */
+
+                messageText = message.text;
+                messageAttachments = message.attachments;
+                quickReply = message.quick_reply;
+
+                payload = {
                     type: '',
                     senderID: senderID,
                     messageId: messageId,
                     appId: appId,
                     metadata: metadata
-                };
-                
+                };                
+            }
+
+            this.response.code = 200;
+            this.response.status = 'success';
+            this.response.origin = 'fbEvent';
+
             if (isEcho) {
                 payload.type = 'echo';
                 this.response.payload = payload;
                 callback(this.response);
-                // this.fbService.handleEcho(messageId, appId, metadata);
                 return;
             } else if (quickReply) {
                 this.fbService.sendTypingOn(senderID);
-
                 payload.type = 'quickReply';
                 payload.quickReply = quickReply;
                 this.response.payload = payload;
                 callback(this.response);
-                // this.handleQuickReply(senderID, quickReply, messageId);
                 return;
             }
 
@@ -267,6 +277,10 @@ export default class {
      * @param {Function} callback 
      */
     handleDfResponse(sender, response, callback) {
+        
+        console.log('Handling dialog flow response');
+        // console.log(JSON.stringify(response));
+
         let responseText = response.fulfillmentText;
       
         let messages = response.fulfillmentMessages;
@@ -282,9 +296,6 @@ export default class {
             params: parameters,
             type: ''
         };
-
-        console.log('Handling DF Response -->');
-        // console.log(JSON.stringify(response));
 
         try{
             if (action) {
@@ -321,8 +332,8 @@ export default class {
             }
     
             this.response.payload = payload;
+            this.response.origin = 'dfResponse';
 
-            // this.fbService.handleMessages(messages, sender);
             if(callback){
                 callback(this.response);
                 return;
@@ -371,7 +382,7 @@ export default class {
      */
     handleDefault(response){
         try{
-            // console.log('Default actions, on hanlde --->');
+            console.log('Handling response by default option');
             // console.log(JSON.stringify(response));
             switch(response.payload.type)
             {
@@ -397,10 +408,6 @@ export default class {
         }catch(err){
             console.log(`An error ocurred : ${err}, method: handleDefault. Response: `);
             console.log(JSON.stringify(response));
-            // this.response.code = 500;
-            // this.response.status = 'error';
-            // this.response.payload = `An error ocurred function: handleDefault() --- Error: ${err}`;
-            // callback(this.response);
         }
     }
 }

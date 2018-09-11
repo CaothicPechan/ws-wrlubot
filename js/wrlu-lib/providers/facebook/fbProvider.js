@@ -18,10 +18,13 @@ import { sleep } from '../../utils/utils'
  * 
  * @argument {String} graphMsgURL       URL from Facebook Graph API
  * @argument {String} pageToken         Facebook token page
+ * @argument {String} appSecret         App key secret from facebook app
+ * @argument {String} verifyToken       Verify Token from facebook app
+ * @argument {String} webhookUri        URL for setting the webhook for verifying fb request
+ *                                      default = '@/webhook/'
  */
 
 export default class {
-
     constructor(graphMsgURL, pageToken, appSecret, verifyToken, webhookUri = '/webhook/'){
         this.constants = {};
         this.constants.graphMsgURL = `${graphMsgURL}messages`
@@ -72,7 +75,7 @@ export default class {
          */
         setWebhook(app, callback){
 
-            console.log('Setting webhook...')
+            console.log('Setting webhook')
 
             /** Verifying Facebook Request **/
             app.use(bodyParser.json({
@@ -107,22 +110,23 @@ export default class {
                             if (messagingEvent.optin) {
                                 this.receivedAuthentication(messagingEvent,callback);
                             } else if (messagingEvent.message) {
+                                console.log('FbProvider: Message event received');
                                 this.wrResponse.payload = messagingEvent;
                                 this.wrResponse.eventType = 'message';
                                 callback(this.wrResponse);
                             } else if (messagingEvent.delivery) {
                                 this.receivedDeliveryConfirmation(messagingEvent,callback);
                             } else if (messagingEvent.postback) {
+                                console.log('FbProvider: Message event postback received');
                                 this.wrResponse.payload = messagingEvent;
                                 this.wrResponse.eventType = 'postback';
                                 callback(this.wrResponse);
                             } else if (messagingEvent.read) {
-                                console.log('<-- Message Readen -->');
                                 this.receivedMessageRead(messagingEvent,callback);
                             } else if (messagingEvent.account_linking) {
                                 this.receivedAccountLink(messagingEvent,callback);
                             } else {
-                                console.log("Webhook received unknown messagingEvent: ", messagingEvent);
+                                console.log("FbProvier: Webhook received unknown messagingEvent: ", messagingEvent);
                             }
                         });
                     });
@@ -142,8 +146,6 @@ export default class {
          * @param {String} sender   Sender identifier
          */
         handleMessage(message, sender){
-            console.log('Message on send');
-            // console.log(JSON.stringify(message));
             switch (message.message) {
                 case "text": 
                     message.text.text.map( text => {
@@ -201,12 +203,6 @@ export default class {
                 if(messageObj.message != 'card'){
                     this.handleMessage(messageObj,sender);
                 }
-                // switch(messageObj.message){
-                //     case 'text':{
-                //         this.handleMessage(messageObj,sender);
-                //         break;
-                //     }
-                // }
             });
 
             if(cardTypes.length > 0){
@@ -214,29 +210,6 @@ export default class {
                 this.handleCardMessages(cardTypes,sender);
             }
 
-            // for (var i = 0; i < messages.length; i++) {
-         
-            //     if ( previousType == "card" && (messages[i].message != "card" || i == messages.length - 1)) {
-            //         timeout = (i - 1) * timeoutInterval;
-            //         setTimeout(this.handleCardMessages.bind(null, cardTypes, sender), timeout);
-            //         cardTypes = [];
-            //         timeout = i * timeoutInterval;
-            //         setTimeout(this.handleMessage.bind(null, messages[i], sender), timeout);
-            //     } else if ( messages[i].message == "card" && i == messages.length - 1) {
-            //         cardTypes.push(messages[i]);
-            //         timeout = (i - 1) * timeoutInterval;
-            //         setTimeout(this.handleCardMessages.bind(null, cardTypes, sender), timeout);
-            //         cardTypes = [];
-            //     } else if ( messages[i].message == "card") {
-            //         cardTypes.push(messages[i]);
-            //     } else {
-            //         timeout = i * timeoutInterval;
-            //         setTimeout(this.handleMessage.bind(null, messages[i], sender), timeout);
-            //     }
-         
-            //     previousType = messages[i].message;
-         
-            // }
         }
         
         /** Handle cards messages
@@ -304,7 +277,7 @@ export default class {
             var watermark = event.read.watermark;
             var sequenceNumber = event.read.seq;
 
-            console.log("Received message read event for watermark %d and sequence " +
+            console.log("FbProvider: Received message read event for watermark %d and sequence " +
                 "number %d", watermark, sequenceNumber);
 
             this.wrResponse.payload = event;
@@ -327,7 +300,7 @@ export default class {
             var status = event.account_linking.status;
             var authCode = event.account_linking.authorization_code;
 
-            console.log("Received account link event with for user %d with status %s " +
+            console.log("FbProvider: Received account link event with for user %d with status %s " +
                 "and auth code %s ", senderID, status, authCode);
 
             this.wrResponse.payload = event;
@@ -352,12 +325,12 @@ export default class {
 
             if (messageIDs) {
                 messageIDs.forEach((messageID) => {
-                    console.log("Received delivery confirmation for message ID: %s",
+                    console.log("FbProvider: Received delivery confirmation for message ID: %s",
                         messageID);
                 });
             }
 
-            console.log("All message before %d were delivered.", watermark);
+            console.log("FbProvider: All message before %d were delivered.", watermark);
             
             this.wrResponse.payload = event;
             this.wrResponse.eventType = 'delivery-confirm';
@@ -387,7 +360,7 @@ export default class {
             var timeOfAuth = event.timestamp;
             var passThroughParam = event.optin.ref;
 
-            console.log("Received authentication for user %d and page %d with pass " +
+            console.log("FbProvider: Received authentication for user %d and page %d with pass " +
                 "through param '%s' at %d", senderID, recipientID, passThroughParam,
                 timeOfAuth);
 
@@ -409,9 +382,9 @@ export default class {
         
         verifyRequestSignature(req, res, buf){
             var signature = req.headers["x-hub-signature"];
-            console.log('Verifying RequestSignature...');
+            console.log('FbProvider: Verifying RequestSignature');
             if (!signature) {
-                throw new Error('Couldn\'t validate the signature.');
+                throw new Error('FbProvider: Couldn\'t validate the signature.');
             } else {
                 var elements = signature.split('=');
                 var method = elements[0];
@@ -422,8 +395,8 @@ export default class {
                     .digest('hex');
 
                 if (signatureHash != expectedHash) {
-                    throw new Error("Couldn't validate the request signature.");
-                    console.log("Couldn't validate the request signature.");
+                    throw new Error("FbProvider: Couldn't validate the request signature.");
+                    console.log("FbProvider: Couldn't validate the request signature.");
                 }
             }
         }
@@ -534,7 +507,6 @@ export default class {
                     }
                 }
             };
-            console.log('Sendging File message');
             this.callSendAPI(messageData,true);
         }
 
@@ -596,9 +568,6 @@ export default class {
          * @param {*} recipientId 
          */
         sendReadReceipt(recipientId) {
-            
-            console.log("Sending a read receipt to mark message as seen");
-
             var messageData = {
                 recipient: {
                     id: recipientId
@@ -613,10 +582,8 @@ export default class {
          * 
          * @param {*} recipientId 
          */
-        sendTypingOn(recipientId){
-            
+        sendTypingOn(recipientId){            
             console.log("Turning typing indicator on");
-
             var messageData = {
                 recipient: {
                     id: recipientId
@@ -632,7 +599,6 @@ export default class {
          * @param {*} recipientId 
          */
         sendTypingOff(recipientId){
-            
             console.log("Turning typing indicator off");
             var messageData = {
                 recipient: {
@@ -696,16 +662,15 @@ export default class {
                     var messageId = body.message_id;
 
                     if (messageId) {
-                        console.log("Successfully sent message with id %s to recipient %s",
+                        console.log("FbProvider: Successfully sent message with id %s to recipient %s",
                             messageId, recipientId);
                     } else {
-                        console.log("Successfully called Send API for recipient %s",
+                        console.log("FbProvider: Successfully called Send API for recipient %s",
                             recipientId);
                     }
                 } else {
-                    console.log("Failed calling Send API");
+                    console.log("FbProvider: Failed calling Send API");
                     console.log(JSON.stringify(response.body));
-                    // console.error("Failed calling Send API", response.statusCode, response.statusMessage, body.error);
                 }
             });
         }
