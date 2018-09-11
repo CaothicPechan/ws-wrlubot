@@ -254,6 +254,7 @@ export default class {
 
             if (messageText) {
                 this.dfService.sendTextQueryToApiAi(this.sessionIds, this.handleDfResponse, senderID, messageText, callback);
+                return;
             } else if (messageAttachments) {
                 payload.type = 'attachments';
                 payload.attachments = messageAttachments;
