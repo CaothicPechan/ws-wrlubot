@@ -200,7 +200,7 @@ var _class = function () {
         key: 'handleFbEvent',
         value: function handleFbEvent(event, callback) {
 
-            // console.log(`Handling FB event, event: \n ${JSON.stringify(event)}`);
+            console.log('Handling FB event, event: \n ' + JSON.stringify(event));
             // console.log(JSON.stringify(event));
 
             var senderID = {};
@@ -450,7 +450,7 @@ var _class = function () {
                         }
                 }
             } catch (err) {
-                // console.log(`An error ocurred : ${err}, method: handleDefault. Response: ${JSON.stringify(response)} `);
+                console.log('An error ocurred : ' + err + ', method: handleDefault. Response: ' + JSON.stringify(response) + ' ');
             }
         }
     }]);

@@ -25,7 +25,7 @@ import { sleep } from '../../utils/utils'
  */
 
 export default class {
-
+    
     constructor(graphMsgURL, pageToken, appSecret, verifyToken, webhookUri = '/webhook/'){
         this.constants = {};
         this.constants.graphMsgURL = `${graphMsgURL}messages`
@@ -76,7 +76,7 @@ export default class {
          */
         setWebhook(app, callback){
 
-            console.log('Setting webhook');
+            console.log('Setting webhook')
 
             /** Verifying Facebook Request **/
             app.use(bodyParser.json({
