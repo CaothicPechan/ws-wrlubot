@@ -3,6 +3,10 @@
   "version": "0.0.1",
   "description": "Chat bot for utility",
   "main": "./js/app.js",
+  "engines": {
+    "node": ">=7.10.1",
+    "npm": ">=4.2.0"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "clean": "rm -rf dist",
