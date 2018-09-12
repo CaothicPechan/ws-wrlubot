@@ -12,14 +12,7 @@ exports.default = function (app) {
             response: 'Hello index deploy!'
         });
     });
-    app.get('/webhook/', function (req, res) {
-        if (req.query['hub.mode'] === 'subscribe' && req.query['hub.verify_token'] === _config.constants.fb.verifyToken) {
-            res.status(200).send(req.query['hub.challenge']);
-        } else {
-            console.error("Failed validation. Make sure the validation tokens match.");
-            res.sendStatus(403);
-        }
-    });
+
     app.get('/404', function (req, res) {
         res.json({
             response: '404 error!'
