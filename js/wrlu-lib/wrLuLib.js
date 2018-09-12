@@ -160,7 +160,7 @@ export default class {
      */
     handleFbEvent(event, callback) {
         
-        console.log(`Handling FB event, event: \n ${JSON.stringify(event)}`);
+        console.log(`Handling FB event, event: ${JSON.stringify(event)}`);
         // console.log(JSON.stringify(event));
 
         let senderID = {};
@@ -279,7 +279,7 @@ export default class {
      */
     handleDfResponse(sender, response, callback) {
         
-        console.log(`Handling dialog flow response: \n ${JSON.stringify(response)}`);
+        console.log(`Handling dialog flow response: ${JSON.stringify(response)}`);
         // console.log(JSON.stringify(response));
 
         let responseText = response.fulfillmentText;
@@ -389,10 +389,12 @@ export default class {
             {
                 case 'action':{
                     this.fbService.handleMessages(response.payload.messages, response.payload.sender);
+                    return;
                     break;
                 }
                 case 'messages':{
                     this.fbService.handleMessages(response.payload.messages, response.payload.sender);
+                    return;
                     break;
                 }
                 case 'quickReply':{
@@ -401,11 +403,13 @@ export default class {
                 }
                 case 'echo':{
                     console.log('Echo recieved');
+                    return;
                     /* PENDING */
                     // this.fbService.handleEcho(response.payload.messageId, response.payload.appId, response.payload.metadata);
                     break;
                 }
             }
+            return;
         }catch(err){
             console.log(`An error ocurred : ${err}, method: handleDefault. Response: ${JSON.stringify(response)} `);
         }

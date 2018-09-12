@@ -689,6 +689,8 @@ export default class {
 
             let url = attach ? this.constants.graphMsAttURL : this.constants.graphMsgURL;
 
+            console.log(`Calling send facebok API. Data to send: ${messageData}`);
+
             request({
                 uri: this.constants.graphMsgURL,
                 qs: {
