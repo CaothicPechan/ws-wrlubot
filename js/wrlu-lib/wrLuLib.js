@@ -279,7 +279,7 @@ export default class {
      */
     handleDfResponse(sender, response, callback) {
         
-        console.log('Handling dialog flow response');
+        console.log(`Handling dialog flow response: \n ${JSON.stringify(response)}`);
         // console.log(JSON.stringify(response));
 
         let responseText = response.fulfillmentText;

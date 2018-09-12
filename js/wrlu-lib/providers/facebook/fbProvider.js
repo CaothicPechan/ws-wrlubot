@@ -25,7 +25,7 @@ import { sleep } from '../../utils/utils'
  */
 
 export default class {
-    
+
     constructor(graphMsgURL, pageToken, appSecret, verifyToken, webhookUri = '/webhook/'){
         this.constants = {};
         this.constants.graphMsgURL = `${graphMsgURL}messages`
@@ -220,40 +220,80 @@ export default class {
          */
         handleCardMessages(messages, sender){
             let elements = [];
-            for (var m = 0; m < messages.length; m++) {
-                let message = messages[m];
-        
-                let buttons = [];
-                for (var b = 0; b < message.card.buttons.length; b++) {
-                    let isLink = (message.card.buttons[b].postback.substring(0, 4) === 'http');
-                    let button;
-                    if (isLink) {
-                        button = {
-                            "type": "web_url",
-                            "title": message.card.buttons[b].text,
-                            "url": message.card.buttons[b].postback
+
+            try{
+                messages.map( m => {
+
+                    let card = m.card;
+                    let el = {};
+                    let buttons = [];
+
+                    el.title = card.title;
+                    el.image_url = card.imageUri;
+                    el.subtitle = card.subtitle;
+
+
+                    card.buttons.map( b => {
+                        let button = {};
+                        let isLink = b.postback.substring(0,4) == 'http';
+
+                        if(isLink){
+                            button.type = 'web_url';
+                            button.title = b.text;
+                            button.url = b.postback;
+                        }else{
+                            button.type = 'postback';
+                            button.title = b.text;
+                            button.payload = b.postback;
                         }
-                    } else {
-                        button = {
-                            "type": "postback",
-                            "title": message.card.buttons[b].text,
-                            "payload": message.card.buttons[b].postback
-                        }
-                    }
-                    buttons.push(button);
-                }
-        
-        
-                let element = {
-                    "title": message.card.title,
-                    "image_url":message.card.imageUri,
-                    "subtitle": message.card.subtitle,
-                    "buttons": buttons
-                };
-                elements.push(element);
+
+                        buttons.push(button);
+                    })
+
+                    el.buttons = buttons;
+                    
+                    elements.push(el);
+                })
+
+                this.sendGenericMessage(sender, elements);
+
+            }catch(err){
+                console.log(`FbProvider: An error ocurred on handling card messages. Error: ${err}`);
             }
+
+            // for (var m = 0; m < messages.length; m++) {
+            //     let message = messages[m];
+        
+            //     let buttons = [];
+            //     for (var b = 0; b < message.card.buttons.length; b++) {
+            //         let isLink = (message.card.buttons[b].postback.substring(0, 4) === 'http');
+            //         let button;
+            //         if (isLink) {
+            //             button = {
+            //                 "type": "web_url",
+            //                 "title": message.card.buttons[b].text,
+            //                 "url": message.card.buttons[b].postback
+            //             }
+            //         } else {
+            //             button = {
+            //                 "type": "postback",
+            //                 "title": message.card.buttons[b].text,
+            //                 "payload": message.card.buttons[b].postback
+            //             }
+            //         }
+            //         buttons.push(button);
+            //     }
+        
+        
+            //     let element = {
+            //         "title": message.card.title,
+            //         "image_url":message.card.imageUri,
+            //         "subtitle": message.card.subtitle,
+            //         "buttons": buttons
+            //     };
+            //     elements.push(element);
+            // }
             
-            this.sendGenericMessage(sender, elements);
         }
 
 
