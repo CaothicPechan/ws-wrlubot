@@ -3,10 +3,6 @@
   "version": "0.0.1",
   "description": "Chat bot for utility",
   "main": "./js/app.js",
-  "engines": {
-    "node": "7.10.1",
-    "npm": "4.2.0"
-  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "clean": "rm -rf dist",
@@ -29,6 +25,7 @@
   },
   "homepage": "https://github.com/CaothicPechan/wrlu-chatbot#readme",
   "dependencies": {
+    "babel-cli": "^6.26.0",
     "body-parser": "^1.15.1",
     "dialogflow": "^0.5.0",
     "ejs": "^1.0.0",
