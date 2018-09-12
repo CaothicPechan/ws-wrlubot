@@ -160,7 +160,7 @@ export default class {
      */
     handleFbEvent(event, callback) {
         
-        console.log(`Handling FB event, event: \n ${JSON.stringify(event)}`);
+        // console.log(`Handling FB event, event: \n ${JSON.stringify(event)}`);
         // console.log(JSON.stringify(event));
 
         let senderID = {};
@@ -407,7 +407,7 @@ export default class {
                 }
             }
         }catch(err){
-            console.log(`An error ocurred : ${err}, method: handleDefault. Response: ${JSON.stringify(response)} `);
+            // console.log(`An error ocurred : ${err}, method: handleDefault. Response: ${JSON.stringify(response)} `);
         }
     }
 }
