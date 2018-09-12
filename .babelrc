@@ -6,7 +6,5 @@
         "stage-0"
     ],
     "plugins": [
-        "transform-class-constructor-call",
-        "transform-class-properties"
     ]
 }
