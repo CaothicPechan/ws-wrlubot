@@ -18,7 +18,7 @@ import structjson from './structjson'
  *                                              auth on DialogFlow API.
  * 
  * @argument {String} clientEmail               Email using on google cloud (service account)
- *                          |                   for setting dialogflow project
+ *                                              for setting dialogflow project
  * 
  * @argument {String} privateKey                Private key from google credentials for the
  *                                              DialogFlow project
