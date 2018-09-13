@@ -59,6 +59,7 @@ export default class {
         this.sendAccountLinking = this.sendAccountLinking.bind(this);
 
         this.verifyRequestSignature = this.verifyRequestSignature.bind(this);
+        this.getUserInfo = this.getUserInfo.bind(this);
 
     }
 
@@ -777,14 +778,15 @@ export default class {
             },(error, response, body) => {
                 if (!error && response.statusCode == 200) {
                     var user = JSON.parse(body);
-                    console.log('Response User fb');
-                    console.log(response);
+
                     
                     this.wrResponse.status = 'success';
                     this.wrResponse.code = 200;
                     this.wrResponse.origin = 'fbProvider';
                     this.wrResponse.payload = user;
                     
+                    console.log('Response User fb');
+                    console.log(this.wrResponse);
                     if(callback){
                         callback(this.wrResponse);
                     }else{
