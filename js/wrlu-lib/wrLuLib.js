@@ -311,7 +311,6 @@ export default class {
                 this.response.status = 'success';
                 payload.type = 'messages';
     
-                this.fbService.handleMessages(messages,sender);
     
             } else if (responseText) {
                 
@@ -383,7 +382,7 @@ export default class {
      */
     handleDefault(response){
         try{
-            console.log('Handling response by default option');
+            console.log(`Handling response by default option: ${JSON.stringify(response)}`);
             // console.log(JSON.stringify(response));
             switch(response.payload.type)
             {
