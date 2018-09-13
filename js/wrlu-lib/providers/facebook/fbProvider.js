@@ -766,8 +766,7 @@ export default class {
          */
         getUserInfo(senderID, callback){
 
-            console.log('Calling User service:');
-            console.log('Params' + senderID);
+            console.log('fbProvider: Calling User service');
 
             request({
                 uri: this.constants.graphGlobalURL + senderID,
@@ -784,9 +783,7 @@ export default class {
                     this.wrResponse.code = 200;
                     this.wrResponse.origin = 'fbProvider';
                     this.wrResponse.payload = user;
-                    
-                    console.log('Response User fb');
-                    console.log(this.wrResponse);
+
                     if(callback){
                         callback(this.wrResponse);
                     }else{
