@@ -36,7 +36,7 @@ chatbot.start(app,(res) => {
 					let buttons = [], elements = [];
 
 					let userInfo;
-					chatbot.fbService.getUserInfo(sender).then((u) => {
+					chatbot.fbService.getUserInfo(sender,(u) => {
 						userInfo = u;
 						console.log(`User info ${JSON.stringify(userInfo)}`);
 					});
