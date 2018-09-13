@@ -34,7 +34,8 @@ import { globalResponse } from './models/commonObjects'
  *                                  verifyToken: '',
  *                                  appID: '',
  *                                  appSecret: '',
- *                                  graphMsgURL: 'https://graph.facebook.com/v2.6/me/messages'
+ *                                  graphGlobalURL: '', https://graph.facebook.com/v2.6/
+ *                                  graphMsgURL: ' https://graph.facebook.com/v2.6/me/messages'
  *                              },
  *                              gcp:{
  *                                  projectId: '',
@@ -50,7 +51,7 @@ import { globalResponse } from './models/commonObjects'
 export default class {
     constructor(app, config){
         this.app = app;
-        this.fbService = new fbProvider(config.fb.graphMsgURL, config.fb.pageToken, config.fb.appSecret, config.fb.verifyToken);
+        this.fbService = new fbProvider(config.fb.graphGlobalURL, config.fb.graphMsgURL, config.fb.pageToken, config.fb.appSecret, config.fb.verifyToken);
         this.dfService = new dfProvider(config.gcp.projectId, config.gcp.clientEmail, config.gcp.privateKey, config.gcp.languageCode);
         this.sessionIds = new Map();
         this.response = globalResponse;

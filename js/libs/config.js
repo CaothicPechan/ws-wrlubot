@@ -8,6 +8,7 @@ export const constants =
         verifyToken: 'pechanbot',
         appID: '2135975886726818',
         appSecret: '47f848974f91e853d50367d9bece06ee',
+        graphGlobalURL: 'https://graph.facebook.com/v2.6/',
         graphMsgURL: 'https://graph.facebook.com/v2.6/me/'
     },
     gcp:{

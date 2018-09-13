@@ -26,8 +26,9 @@ import { sleep } from '../../utils/utils'
 
 export default class {
 
-    constructor(graphMsgURL, pageToken, appSecret, verifyToken, webhookUri = '/webhook/'){
+    constructor(graphGlobalURL, graphMsgURL, pageToken, appSecret, verifyToken, webhookUri = '/webhook/'){
         this.constants = {};
+        this.constants.graphGlobalURL = graphGlobalURL;
         this.constants.graphMsgURL = `${graphMsgURL}messages`
         this.constants.graphMsAttURL = `${graphMsgURL}message_attachments`
         this.constants.pageToken = pageToken;
@@ -579,7 +580,41 @@ export default class {
             this.callSendAPI(messageData);
         }
 
+        /** Send List Message
+         * 
+         * @description https://developers.facebook.com/docs/messenger-platform/send-messages/template/list
+         * 
+         * @param {*}       receiptId 
+         * @param {Array}   elements 
+         * @param {String}  topStyle
+         * @param {Array}   buttons
+         */
+        sendListMessage(receiptId, elements, topStyle, buttons){
+
+            var messageData = {
+                receipt:{
+                    id: recipientId
+                },
+                message:{
+                    attachment:{
+                        type: 'template',
+                        payload:{
+                            template_type: 'list',
+                            top_element_style: topStyle,
+                            elements: elements
+
+                        }
+                    }
+                },
+                buttons: buttons
+            };
+
+            this.callSendAPI(messageData);
+        }
+
         /** Send Generic Message
+         * 
+         * @description https://developers.facebook.com/docs/messenger-platform/send-messages/template/generic
          * 
          * @param {*} recipientId 
          * @param {*} elements 
@@ -588,7 +623,7 @@ export default class {
 
             var messageData = {
                 recipient: {
-                    id: recipientId
+                    c
                 },
                 message: {
                     attachment: {
@@ -717,4 +752,56 @@ export default class {
                 }
             });
         }
+
+    /** User Facebook methods
+     * 
+     * @description Functions for getting information about the user by Fb Graph API
+     * @link https://developers.facebook.com/docs/graph-api/reference/user/
+     * @link https://developers.facebook.com/docs/graph-api/using-graph-api/
+     */
+        /** Get User info
+         * 
+         * @param {String}  senderID
+         */
+        getUserInfo(senderID, callback){
+
+            request({
+                uri: this.constants.graphGlobalURL + senderID,
+                qs: {
+                    access_token: this.constants.pageToken
+                },
+
+            },(error, response, body) => {
+                if (!error && response.statusCode == 200) {
+                    var user = JSON.parse(body);
+                    
+                    this.wrResponse.status = 'success';
+                    this.wrResponse.code = 200;
+                    this.wrResponse.origin = 'fbProvider';
+                    this.wrResponse.payload = user;
+                    
+                    if(callback){
+                        callback(this.wrResponse);
+                    }else{
+                        return this.wrResponse;
+                    }
+                   
+                } else {
+                    this.wrResponse.status = 'error';
+                    this.wrResponse.code = response.statusCode;
+                    this.wrResponse.origin = 'fbProvider';
+                    this.wrResponse.payload = response.body;
+
+                    if(callback){
+                        callback(this.wrResponse);
+                    }else{
+                        return this.wrResponse;
+                    }
+                    console.log("FbProvider: Failed calling Send API");
+                    console.log(JSON.stringify(response.body));
+                }
+            });
+
+        }
+    
 }
