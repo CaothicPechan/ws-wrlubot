@@ -765,6 +765,9 @@ export default class {
          */
         getUserInfo(senderID, callback){
 
+            console.log('Calling User service:');
+            console.log('Params' + senderID);
+
             request({
                 uri: this.constants.graphGlobalURL + senderID,
                 qs: {
@@ -774,6 +777,8 @@ export default class {
             },(error, response, body) => {
                 if (!error && response.statusCode == 200) {
                     var user = JSON.parse(body);
+                    console.log('Response User fb');
+                    console.log(response);
                     
                     this.wrResponse.status = 'success';
                     this.wrResponse.code = 200;
