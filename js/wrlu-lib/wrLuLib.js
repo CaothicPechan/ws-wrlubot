@@ -228,12 +228,24 @@ export default class {
         try{
             let payload = {};
             
+            this.response.code = 200;
+            this.response.status = 'success';
+            this.response.origin = 'fbEvent';
 
             if(event.read){
                 payload = {
                     type: 'read',
                     senderID: senderID,
                     read: event.read
+                };                
+                this.response.payload = payload;
+                callback(this.response);
+                return;
+            }else if(event.postback){
+                payload = {
+                    type: 'postback',
+                    senderID: senderID,
+                    data: event.postback.payload
                 };                
                 this.response.payload = payload;
                 callback(this.response);
@@ -279,10 +291,6 @@ export default class {
                     metadata: metadata
                 };                
             }
-
-            this.response.code = 200;
-            this.response.status = 'success';
-            this.response.origin = 'fbEvent';
 
             if (isEcho) {
                 payload.type = 'echo';
