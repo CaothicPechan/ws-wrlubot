@@ -88,9 +88,9 @@ export default class {
             };
   
             this.fbService.setGreeting(grets,(res) => {
-                console.log('Response greeting');
-                console.log(res);
-            });    
+                console.log(`Response greeting: ${JSON.stringify(res)}`);
+            });   
+             
         }catch(err){
             this.response.code = 500;
             this.response.status = 'error';

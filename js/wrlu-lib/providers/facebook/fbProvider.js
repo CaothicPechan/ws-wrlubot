@@ -830,10 +830,7 @@ export default class {
             },(error, response, body) => {
                 if (!error && response.statusCode == 200) {
                     var res = body;
-                    console.log('Greeting service succes: ' +  JSON.stringify(res));
-
-                    console.log('Greeting service succes: ' +  JSON.stringify(body));
-
+                    
                     this.wrResponse.status = 'success';
                     this.wrResponse.code = 200;
                     this.wrResponse.origin = 'fbProvider';
