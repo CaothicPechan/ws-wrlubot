@@ -444,6 +444,11 @@ export default class {
                     return;
                     break;
                 }
+                case 'postback':{
+                    this.fbService.handleMessages(response.payload.messages, response.payload.sender);
+                    return;
+                    break;
+                }
                 case 'quickReply':{
                     return this.dfService.sendTextQueryToApiAi(this.sessionIds, this.handleDfResponse, response.payload.senderID, response.payload.quickReply.payload);
                     break;

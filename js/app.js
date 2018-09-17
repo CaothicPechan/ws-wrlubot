@@ -30,7 +30,7 @@ chatbot.start(app,(res) => {
 		if(res.payload){
 			try{
 				let data = res.payload;
-				if(data.type == 'action' || data.type == 'messages' || data.type == 'quickReply'){
+				if(data.type == 'action' || data.type == 'messages' || data.type == 'quickReply' || data.type == "postback"){
 					// let defaultres = chatbot.handleDefault(res);
 					let sender = chatbot.getSender();
 					let buttons = [], elements = [];
