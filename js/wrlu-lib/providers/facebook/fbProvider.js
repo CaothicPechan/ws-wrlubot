@@ -816,8 +816,8 @@ export default class {
      * @link https://developers.facebook.com/docs/messenger-platform/reference/messenger-profile-api/greeting
      * 
     */
-        setGreeting(greeting, callback){
-            console.log('fbProvider: Setting greeting service');
+        setProfileConfig(settings, callback){
+            console.log('fbProvider: Setting profile service');
 
             request({
                 uri: this.constants.graphProfileURL,
@@ -825,12 +825,12 @@ export default class {
                     access_token: this.constants.pageToken
                 },
                 method: 'POST',
-                json: greeting
+                json: settings
 
             },(error, response, body) => {
                 if (!error && response.statusCode == 200) {
                     var res = body;
-                    
+
                     this.wrResponse.status = 'success';
                     this.wrResponse.code = 200;
                     this.wrResponse.origin = 'fbProvider';
@@ -853,7 +853,7 @@ export default class {
                     }else{
                         return this.wrResponse;
                     }
-                    console.log("FbProvider: Failed calling greeting service");
+                    console.log("FbProvider: Failed calling profile service");
                     console.log(JSON.stringify(response.body));
                 }
             });

@@ -86,11 +86,17 @@ export default class {
                     }
                 ]
             };
+
+            let getStart = { 
+                get_started:{
+                  payload:"Comenzar"
+                }
+            };
   
-            this.fbService.setGreeting(grets,(res) => {
-                console.log(`Response greeting: ${JSON.stringify(res)}`);
+            this.fbService.setProfileConfig(getStart,(res) => {
+                console.log(`Response profile: ${JSON.stringify(res)}`);
             });   
-             
+
         }catch(err){
             this.response.code = 500;
             this.response.status = 'error';
