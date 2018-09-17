@@ -801,11 +801,63 @@ export default class {
                     }else{
                         return this.wrResponse;
                     }
-                    console.log("FbProvider: Failed calling Send API");
+                    console.log("FbProvider: Failed calling user service");
                     console.log(JSON.stringify(response.body));
                 }
             });
 
+        }
+
+    /** Utilities Facebook methods 
+     * 
+     * @description Functions for set utilities on your chatbot, like set a persistent menu
+     *              greetings or get started button. Profile facebook API.
+     * @link https://developers.facebook.com/docs/messenger-platform/reference/messenger-profile-api/greeting
+     * 
+    */
+        setGreeting(greeting, callback){
+            console.log('fbProvider: Setting greeting service');
+
+            request({
+                uri: this.constants.graphMsgURL + 'messenger_profile',
+                qs: {
+                    access_token: this.constants.pageToken
+                },
+                method: 'POST',
+                json: greeting
+
+            },(error, response, body) => {
+                if (!error && response.statusCode == 200) {
+                    console.log('Greeting service succes: ' +  JSON.stringify(response));
+                    var res = JSON.parse(body);
+
+                    
+                    this.wrResponse.status = 'success';
+                    this.wrResponse.code = 200;
+                    this.wrResponse.origin = 'fbProvider';
+                    this.wrResponse.payload = res;
+
+                    if(callback){
+                        callback(this.wrResponse);
+                    }else{
+                        return this.wrResponse;
+                    }
+                   
+                } else {
+                    this.wrResponse.status = 'error';
+                    this.wrResponse.code = response.statusCode;
+                    this.wrResponse.origin = 'fbProvider';
+                    this.wrResponse.payload = response.body;
+
+                    if(callback){
+                        callback(this.wrResponse);
+                    }else{
+                        return this.wrResponse;
+                    }
+                    console.log("FbProvider: Failed calling greeting service");
+                    console.log(JSON.stringify(response.body));
+                }
+            });
         }
     
 }

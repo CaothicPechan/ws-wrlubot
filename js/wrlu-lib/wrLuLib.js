@@ -75,8 +75,21 @@ export default class {
     start(app, callback){
         try{
             this.fbService.setWebhook(app, (res) => {
-                this.handleResponse(res, callback);
-                
+                this.handleResponse(res, callback); 
+            });
+
+            let grets = {
+                greeting:[
+                    {
+                      locale:"default",
+                      text:"¡Hola {{user_first_name}}! Soy wrLu, bienvenido"
+                    }
+                ]
+            };
+  
+            this.fbService.setGreeting(grets,(res) => {
+                console.log('Response greeting');
+                console.log(res);
             });    
         }catch(err){
             this.response.code = 500;
