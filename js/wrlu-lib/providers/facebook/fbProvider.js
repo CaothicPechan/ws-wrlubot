@@ -30,6 +30,7 @@ export default class {
         this.constants = {};
         this.constants.graphGlobalURL = graphGlobalURL;
         this.constants.graphMsgURL = `${graphMsgURL}messages`
+        this.constants.graphProfileURL = `${graphMsgURL}messenger_profile`
         this.constants.graphMsAttURL = `${graphMsgURL}message_attachments`
         this.constants.pageToken = pageToken;
         this.constants.appSecret = appSecret;
@@ -819,7 +820,7 @@ export default class {
             console.log('fbProvider: Setting greeting service');
 
             request({
-                uri: this.constants.graphMsgURL + 'messenger_profile',
+                uri: this.constants.graphProfileURL,
                 qs: {
                     access_token: this.constants.pageToken
                 },
