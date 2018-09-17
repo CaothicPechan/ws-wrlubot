@@ -121,9 +121,9 @@ export default class {
                 ]
             };
   
-            this.fbService.setProfileConfig(persistent_menu,(res) => {
-                console.log(`Response profile: ${JSON.stringify(res)}`);
-            });   
+            // this.fbService.setProfileConfig(persistent_menu,(res) => {
+            //     console.log(`Response profile: ${JSON.stringify(res)}`);
+            // });   
 
         }catch(err){
             this.response.code = 500;
