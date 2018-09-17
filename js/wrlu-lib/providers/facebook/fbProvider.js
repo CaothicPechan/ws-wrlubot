@@ -817,7 +817,7 @@ export default class {
      * 
     */
         setProfileConfig(settings, callback){
-            console.log('fbProvider: Setting profile service');
+            console.log(`fbProvider: Setting profile service. Settings: ${settings}`);
 
             request({
                 uri: this.constants.graphProfileURL,

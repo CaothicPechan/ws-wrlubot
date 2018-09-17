@@ -92,8 +92,36 @@ export default class {
                   payload:"Comenzar"
                 }
             };
+
+            let persistent_menu = 
+            {
+                persistent_menu:[
+                  {
+                    locale:"default",
+                    call_to_actions:[
+                      {
+                        title:"Comunes",
+                        type:"nested",
+                        call_to_actions:[
+                          {
+                            title:"Productos",
+                            type:"postback",
+                            payload:"Productos"
+                          },
+                          {
+                            type:"web_url",
+                            title:"Latest News",
+                            url:"https://www.messenger.com/",
+                            webview_height_ratio:"full"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+            };
   
-            this.fbService.setProfileConfig(getStart,(res) => {
+            this.fbService.setProfileConfig(persistent_menu,(res) => {
                 console.log(`Response profile: ${JSON.stringify(res)}`);
             });   
 
