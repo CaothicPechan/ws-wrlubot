@@ -39,7 +39,7 @@ chatbot.start(app,(res) => {
 					chatbot.fbService.getUserInfo(sender,(u) => {
 						userInfo = u;
 						console.log(`User info ${JSON.stringify(userInfo)}`);
-						chatbot.fbService.sendTextMessage(sender,`Oh! ${userInfo.payload.first_name} has vuelto. ¿Cómo te puedo ayudar?`);
+						// chatbot.fbService.sendTextMessage(sender,`Oh! ${userInfo.payload.first_name} has vuelto. ¿Cómo te puedo ayudar?`);
 					});
 
 					if(data.type == 'action'){
