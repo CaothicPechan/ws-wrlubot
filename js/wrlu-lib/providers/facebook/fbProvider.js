@@ -782,7 +782,7 @@ export default class {
                     
                     this.wrResponse.status = 'success';
                     this.wrResponse.code = 200;
-                    this.wrResponse.origin = 'fbProvider';
+                    this.wrResponse.origin = 'facebook';
                     this.wrResponse.payload = user;
 
                     if(callback){
