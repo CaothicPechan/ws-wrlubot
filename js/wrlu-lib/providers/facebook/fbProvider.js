@@ -262,7 +262,7 @@ export default class {
                 this.sendGenericMessage(sender, elements);
 
             }catch(err){
-                console.log(`FbProvider: An error ocurred on handling card messages. Error: ${err}`);
+                console.log(`FbProvider: An error ocurred on handling card messages. Error: ${err}, line: ${err.lineNumber}`);
             }
 
             // for (var m = 0; m < messages.length; m++) {
