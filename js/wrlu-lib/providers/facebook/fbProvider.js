@@ -253,6 +253,7 @@ export default class {
 
                         buttons.push(button);
                     });
+                    console.log('Buttons' + JSON.stringify(buttons));
 
                     el.buttons = buttons;
                     
