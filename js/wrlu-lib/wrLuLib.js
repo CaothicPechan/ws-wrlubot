@@ -454,7 +454,7 @@ export default class {
                 }
                 case 'postback':{
                     console.log('Handling postbak' + JSON.stringify(response));
-                    this.fbService.handleMessages(response.payload.messages, response.payload.sender);
+                    this.fbService.handleMessages(response.payload.data, response.payload.senderID);
                     return;
                     break;
                 }

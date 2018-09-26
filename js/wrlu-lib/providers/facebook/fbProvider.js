@@ -263,39 +263,6 @@ export default class {
             }catch(err){
                 console.log(`FbProvider: An error ocurred on handling card messages. Error: ${err}`);
             }
-
-            // for (var m = 0; m < messages.length; m++) {
-            //     let message = messages[m];
-        
-            //     let buttons = [];
-            //     for (var b = 0; b < message.card.buttons.length; b++) {
-            //         let isLink = (message.card.buttons[b].postback.substring(0, 4) === 'http');
-            //         let button;
-            //         if (isLink) {
-            //             button = {
-            //                 "type": "web_url",
-            //                 "title": message.card.buttons[b].text,
-            //                 "url": message.card.buttons[b].postback
-            //             }
-            //         } else {
-            //             button = {
-            //                 "type": "postback",
-            //                 "title": message.card.buttons[b].text,
-            //                 "payload": message.card.buttons[b].postback
-            //             }
-            //         }
-            //         buttons.push(button);
-            //     }
-        
-        
-            //     let element = {
-            //         "title": message.card.title,
-            //         "image_url":message.card.imageUri,
-            //         "subtitle": message.card.subtitle,
-            //         "buttons": buttons
-            //     };
-            //     elements.push(element);
-            // }
             
         }
 
