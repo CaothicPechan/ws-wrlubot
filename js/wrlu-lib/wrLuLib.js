@@ -75,6 +75,7 @@ export default class {
     start(app, callback){
         try{
             this.fbService.setWebhook(app, (res) => {
+                console.log('FacebookService response: ' + JSON.stringify(res));
                 this.handleResponse(res, callback); 
             });
 
