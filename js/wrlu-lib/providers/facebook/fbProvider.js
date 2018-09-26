@@ -252,18 +252,17 @@ export default class {
                         }
 
                         buttons.push(button);
-                    });
-                    console.log('Buttons' + JSON.stringify(buttons));
+                    })
 
                     el.buttons = buttons;
                     
                     elements.push(el);
-                });
+                })
 
                 this.sendGenericMessage(sender, elements);
 
             }catch(err){
-                console.log(`FbProvider: An error ocurred on handling card messages. Error: ${err}, line: ${err.lineNumber}`);
+                console.log(`FbProvider: An error ocurred on handling card messages. Error: ${err}`);
             }
 
             // for (var m = 0; m < messages.length; m++) {
@@ -627,7 +626,7 @@ export default class {
 
             var messageData = {
                 recipient: {
-                    c
+                    id: recipientId
                 },
                 message: {
                     attachment: {
