@@ -117,6 +117,7 @@ export default class {
                                 console.log('FbProvider: Message event received');
                                 this.wrResponse.payload = messagingEvent;
                                 this.wrResponse.eventType = 'message';
+                                console.log(callback);
                                 callback(this.wrResponse);
                             } else if (messagingEvent.delivery) {
                                 this.receivedDeliveryConfirmation(messagingEvent,callback);
