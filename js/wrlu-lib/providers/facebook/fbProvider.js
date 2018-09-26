@@ -252,12 +252,12 @@ export default class {
                         }
 
                         buttons.push(button);
-                    })
+                    });
 
                     el.buttons = buttons;
                     
                     elements.push(el);
-                })
+                });
 
                 this.sendGenericMessage(sender, elements);
 
