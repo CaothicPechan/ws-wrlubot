@@ -36,13 +36,12 @@ chatbot.start(app,(res) => {
 					let buttons = [], elements = [];
 
 					let userInfo;
-					// chatbot.fbService.getUserInfo(sender,(u) => {
-					// 	userInfo = u;
-					// 	console.log(`User info ${JSON.stringify(userInfo)}`);
-					// 	chatbot.fbService.sendTextMessage(sender,`Oh! ${userInfo.payload.first_name} has vuelto. ¿Cómo te puedo ayudar?`);
-					// });
+					
 
 					if(data.type == 'action'){
+
+						
+
 						switch(data.action){
 							case 'order.status':{
 								// console.log('Parametro de Orden: ');
@@ -54,6 +53,13 @@ chatbot.start(app,(res) => {
 									}, 3000);
 								}
 								break;
+							}
+							case 'input.welcome':{
+								chatbot.fbService.getUserInfo(sender,(u) => {
+									userInfo = u;
+									console.log(`User info ${JSON.stringify(userInfo)}`);
+									chatbot.fbService.sendTextMessage(sender,`Oh! ${userInfo.payload.first_name} has vuelto. ¿Cómo te puedo ayudar?`);
+								});
 							}
 						}
 					}
