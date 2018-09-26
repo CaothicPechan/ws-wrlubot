@@ -454,7 +454,8 @@ export default class {
                 }
                 case 'postback':{
                     console.log('Handling postbak' + JSON.stringify(response));
-                    this.fbService.handleMessages(response.payload.data, response.payload.senderID);
+                    return this.dfService.sendTextQueryToApiAi(this.sessionIds, this.handleDfResponse, response.payload.senderID, response.payload.data);
+                    // this.dfService.sendTextQueryToApiAi(response.payload.data, response.payload.senderID);
                     return;
                     break;
                 }
