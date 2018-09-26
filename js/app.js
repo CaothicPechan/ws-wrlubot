@@ -59,6 +59,8 @@ chatbot.start(app,(res) => {
 									userInfo = u;
 									console.log(`User info ${JSON.stringify(userInfo)}`);
 									chatbot.fbService.sendTextMessage(sender,`Oh! ${userInfo.payload.first_name} has vuelto. ¿Cómo te puedo ayudar?`);
+									console.log('callbacking');
+									console.log(u);
 								});
 							}
 						}
